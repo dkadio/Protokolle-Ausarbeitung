@@ -1,0 +1,38 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{osi_modell}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Leisch}{L.}%
+     {W.}{W.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{LW1}
+  \strng{fullhash}{LW1}
+  \field{sortinit}{L}
+  \field{howpublished}{\url{http://www.leisch.org/images/osi.jpg}}
+  \field{title}{Das ISO/OSI Modell}
+  \field{year}{2001}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput

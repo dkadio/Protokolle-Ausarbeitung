@@ -1,0 +1,17 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {ngerman}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Einleitung}{2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.1}Das ISO/OSI Referenzmodell\xspace }{2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Die Layer 2 Protokolle im \IeC {\"U}berblick}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Ethernet}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}LAPD}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3}PPP}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Bedeutungen der Protokolle im ISO/OSI Referenzmodell\xspace }{3}

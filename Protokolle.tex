@@ -38,13 +38,89 @@
 %Die Einrücktiefe bei einem neuen Absatz
 \setlength{\parindent}{0pt}
 
+
 %Fülltext
 \usepackage{blindtext}
 
+%Fuer Zitate	
+\PassOptionsToPackage{backend=bibtex}{biblatex}
+\usepackage[natbib=true,style=numeric]{biblatex}
+\usepackage[babel,german=guillemets]{csquotes}
+\bibliography{quellen.bib} 
 
 
+%Eigene Kommandos
+% Osi Modell
+\newcommand{\osi}{ISO/OSI Referenzmodell\xspace}
+
+%Ende Präambel
 	
 \begin{document}
-\section{FET GESCHRIEBEN}
-einfach nur schreiben
+
+\begin{titlepage}
+		\begin{center}
+			\includegraphics[width=.8\linewidth]{Grafiken/logo_htw.jpg}\\[1cm]    
+			\textsc{\LARGE Hochschule für Technik und Wirtschaft \newline Fakultät für Ingenieurwissenschaften}\\[1.5cm]
+			\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} \HRule \\[0.4cm] { \huge \bfseries Ausarbeitung Protokolle}\\[0.4cm]
+			\HRule \\[1.5cm]
+
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushleft} \large
+					\emph{Autoren:}\\
+					Deniz \\
+					Christoph Drost 3576450
+				\end{flushleft}
+			\end{minipage}
+			\hfill
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushright} \large
+					\emph{Betreuer:} \\
+					Jonas Vogt, M.Sc.
+				\end{flushright}
+			\end{minipage}
+			\vfill
+			{\large \today}
+		\end{center}
+	\end{titlepage}
+
+
+%Inhaltsverzeichnis auf eigener Seite
+\tableofcontents
+\newpage 
+
+\section{Einleitung}
+Im Folgenden sollen verschiedene Layer 2 Protokolle für kabelgebundene Netze miteinander verglichen werden. Um die Zusammenhänge besser erklären zu können, möchten wir erst auf das \osi eingehen.
+\subsection{Das \osi}
+\begin{figure}[h]
+\includegraphics[width=0.5\textwidth]{Grafiken/osi_modell.jpg}
+\caption{Das \osi im Überblick \cite{osi_modell}}
+\label{osi_modell}
+\end{figure} 
+Diese Grafik stellt die Schichten des \osi da. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte ermöglicht. Die 7 Schichten stellen Kommunikationsschnittstellen zu der nächst höhere, bzw. tieferen Schicht zu Verfügung. Diese Schichten sind aufgrund ihrer Schnittstellen einzeln austauschbar. Die folgende Ausarbeitung beschäftigt sich mit Layer 2 Protokollen, also dem Data Link Layer. Der Data Link Layer setzt auf dem Physical Layer auf und soll eine fehlerfreie Übertragung garantieren. Das wird durch die Aufteilung in Blöcke und das Errechnen und Prüfen von Prüfsummen erreicht. 
+
+Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten konkret implementiert werden. Diese Implementierungen sind eigene Protokolle.
+
+\section{Die Layer 2 Protokolle im Überblick}
+
+\subsection{Ethernet}
+\blindtext
+
+\subsection{LAPD}
+\blindtext
+
+\subsection{PPP}
+\blindtext
+
+\section{Bedeutungen der Protokolle im \osi }
+%Quellenangabe auf eigener Seite
+\newpage
+\sloppy
+\printbibliography 
+
+
+
+%Abbildungsverzeichnis auf eigener Seite
+\newpage
+\listoffigures
+
 \end{document}
