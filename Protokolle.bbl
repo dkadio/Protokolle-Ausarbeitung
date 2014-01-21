@@ -16,6 +16,21 @@
   {}
 \endgroup
 
+\entry{koax_kabel}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {itwissen.info}{i.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{i1}
+  \strng{fullhash}{i1}
+  \field{sortinit}{I}
+  \field{howpublished}{\url{http://www.itwissen.info/definition/lexikon/Koaxialkabel-COAX-coaxial-cable.html}}
+  \field{title}{Koaxial Kabel}
+\endentry
+
 \entry{SWB-285857835}{book}{}
   \name{author}{1}{}{%
     {{}%
@@ -93,6 +108,38 @@
     {Wiesbaden}%
   }
   \field{year}{2013}
+\endentry
+
+\entry{tw_kabel}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {pace.edu}{p.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{p1}
+  \strng{fullhash}{p1}
+  \field{sortinit}{P}
+  \field{howpublished}{\url{http://webpage.pace.edu/ms16182p/networking/cables.html}}
+  \field{title}{Twistet Pair Kabel}
+  \field{month}{01}
+  \field{year}{2014}
+\endentry
+
+\entry{lwl_leiter}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {phoenixcontact.com}{p.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{p2}
+  \strng{fullhash}{p2}
+  \field{sortinit}{P}
+  \field{howpublished}{\url{https://www.phoenixcontact.com/assets/images_ed/global/web_content/pic_con_a_0042960_int.jpg}}
+  \field{title}{Lichtwellenleiter}
 \endentry
 
 \entry{SWB-097965316}{book}{}
