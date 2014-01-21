@@ -32,6 +32,30 @@
   \field{year}{2001}
 \endentry
 
+\entry{SWB-107223570}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Wetteroth}{W.}%
+     {Debbra}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {McGraw-Hill}%
+  }
+  \keyw{; OSI Computer network standard / Telecommunication systems}
+  \strng{namehash}{WD1}
+  \strng{fullhash}{WD1}
+  \field{sortinit}{W}
+  \field{isbn}{0-07-138041-8}
+  \field{series}{McGraw-Hill telecom professional}
+  \field{title}{OSI reference model for telecommunications}
+  \list{location}{1}{%
+    {New York [u.a.]}%
+  }
+  \field{year}{2002}
+\endentry
+
 \lossort
 \endlossort
 

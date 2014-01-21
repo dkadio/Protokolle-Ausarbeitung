@@ -96,10 +96,27 @@ Im Folgenden sollen verschiedene Layer 2 Protokolle für kabelgebundene Netze mi
 \caption{Das \osi im Überblick \cite{osi_modell}}
 \label{osi_modell}
 \end{figure} 
-Diese Grafik stellt die Schichten des \osi da. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte ermöglicht. Die 7 Schichten stellen Kommunikationsschnittstellen zu der nächst höhere, bzw. tieferen Schicht zu Verfügung. Diese Schichten sind aufgrund ihrer Schnittstellen einzeln austauschbar. Die folgende Ausarbeitung beschäftigt sich mit Layer 2 Protokollen, also dem Data Link Layer. Der Data Link Layer setzt auf dem Physical Layer auf und soll eine fehlerfreie Übertragung garantieren. Das wird durch die Aufteilung in Blöcke und das Errechnen und Prüfen von Prüfsummen erreicht. 
+Diese Grafik stellt die Schichten des \osi da. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte ermöglicht. Es beschreibt ein komplettes Telekommunikationsnetzwerk. Die einzelnen Funktionen sind in 7 Schichten aufgeteilt. 
 
-Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten konkret implementiert werden. Diese Implementierungen sind eigene Protokolle.
+Das \osi standardisiert die Netzwerk Architektur. Dadurch können Hersteller Lösungen anbieten, die auf der ganzen Welt genutzt werden können. Eine proprietäre Lösung hätte zu Insellösungen geführt. Ein weiterer Vorteil ist, dass die einzelnen Schichten, oder Layer, über Schnittstellen miteinander kommunizieren. Das ermöglicht ein Austauschen einzelner Komponenten, ohne die gesamte Architektur ändern zu müssen.
 
+Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten konkret implementiert werden. Diese Implementierungen sind eigene Protokolle. 
+
+\subsection{Der Layer 2}
+Der Layer 2, Data Link Layer, setzt auf dem Physical Layer auf und stellt dem Network Layer seine Dienste zur Verfügung. Der Physical Layer beschriebt das Medium über das die Signale übertragen werden. Hier findet noch keine Logik statt. 
+
+Die Aufgaben des Layer 2 im Überblick:
+\begin{itemize}
+	\item Aufteilung in Pakete
+	\item Fehlerkontrolle
+\end{itemize} 
+
+\subsubsection{Aufteilung in Frames}
+Die Datenblöcke werden im Layer 2 in Frames aufgeteilt. Die Vorteile des Framing sind die schnellere Nutzung eines shared Mediums und dass fehlerhafte Daten nicht komplett übertragen werden müssen.
+\subsubsection{Fehlerkontrolle}
+Der Data Link Layer führt eine Fehlerkontrolle durch. Dazu zählen eine Suche nach Duplikaten, nach inkorrekt oder unvollständig gesendeten Paketen. Wenn ein Fehler entdeckt wird, wird eine neue Übertragung der Frames angefordert \cite[S. 91]{SWB-107223570}. Die Fehlerkontrolle wird über den \glqq Cyclic Redundancy Check\grqq ~CRC durchgeführt. Dieses Verfahren ist eine Möglichkeit zur Prüfsummenberechnung, die beim Sender und der Senke durchgeführt wird. Sind beide Prüfsummen gleich, kann angenommen werden, dass das Frame korrekt übertragen wurde. 
+
+Die Frames werden mit Sequence Numbers durchnummeriert. Der Empfänger prüft, ob die Frames in der richtigen Reihenfolge ankommen. Bei einer \glqq out-of-sequence transmission\grqq ~kann von einem verlorenen Frame ausgegangen werden, das entsprechende Frame wird neu angefordert.
 \section{Die Layer 2 Protokolle im Überblick}
 
 \subsection{Ethernet}
@@ -109,7 +126,7 @@ Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten ko
 \blindtext
 
 \subsection{PPP}
-\blindtext
+Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
 
 \section{Bedeutungen der Protokolle im \osi }
 %Quellenangabe auf eigener Seite
