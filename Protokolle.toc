@@ -6,12 +6,18 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.1}Das ISO/OSI Referenzmodell\xspace }{2}
 \defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.2}Der Layer 2}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {1.2.1}Aufteilung in Frames}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {1.2.2}Fehlerkontrolle}{3}
+\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2}Die Layer 2 Protokolle im \IeC {\"U}berblick}{3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1}Ethernet}{3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.2}LAPD}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}PPP}{3}
+\contentsline {subsection}{\numberline {2.3}PPP}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Bedeutungen der Protokolle im ISO/OSI Referenzmodell\xspace }{3}
+\contentsline {section}{\numberline {3}Bedeutungen der Protokolle im ISO/OSI Referenzmodell\xspace }{4}
