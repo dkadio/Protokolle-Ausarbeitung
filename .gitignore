@@ -1,9 +1,7 @@
-Protokolle.log
-*.log
-*.bbl
 *.bcf
 *.blg
 *.lof
 *.xml
 *.gz
 *.toc
+*.log
