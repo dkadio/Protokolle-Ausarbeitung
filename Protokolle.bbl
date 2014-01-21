@@ -16,6 +16,35 @@
   {}
 \endgroup
 
+\entry{SWB-285857835}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Kauffels}{K.}%
+     {Franz-Joachim}{F.-J.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {mitp}%
+  }
+  \keyw{Lokales Netz}
+  \strng{namehash}{KFJ1}
+  \strng{fullhash}{KFJ1}
+  \field{sortinit}{K}
+  \field{edition}{16. Aufl., IT-Studienausg., 1. Aufl.}
+  \field{isbn}{978-3-8266-5961-4}
+  \field{title}{Lokale Netze : [{\"U}bertragungsmedien, Verkabelungssysteme,
+  Zugriffsverfahren; die Wireless-Revolution: Maschennetze; umfangreiches
+  Referenzmaterial auf CD]}
+  \verb{url}
+  \verb http://www.gbv.de/dms/ilmenau/toc/568528190.PDF
+  \endverb
+  \list{location}{1}{%
+    {Heidelberg}%
+  }
+  \field{year}{2008}
+\endentry
+
 \entry{osi_modell}{misc}{}
   \name{author}{1}{}{%
     {{}%
@@ -30,6 +59,96 @@
   \field{howpublished}{\url{http://www.leisch.org/images/osi.jpg}}
   \field{title}{Das ISO/OSI Modell}
   \field{year}{2001}
+\endentry
+
+\entry{SWB-381839486}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Obermann}{O.}%
+     {Kristof}{K.}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{1}{}{%
+    {{}%
+     {Horneffer}{H.}%
+     {Martin}{M.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer Vieweg}%
+  }
+  \keyw{Datennetz / OSI-Modell ; Ethernet ; IP ; MPLS ; Autonomes System /
+  Routing ; Computer engineering / Telecommunication / Engineering}
+  \strng{namehash}{OK1}
+  \strng{fullhash}{OK1}
+  \field{sortinit}{O}
+  \field{edition}{2., akt. und verb. Aufl. 2013}
+  \field{isbn}{978-3-8348-2098-3}
+  \field{series}{SpringerLink : B{\"u}cher}
+  \field{title}{Datennetztechnologien f{\"u}r Next Generation Networks :
+  Ethernet, IP, MPLS und andere}
+  \list{location}{1}{%
+    {Wiesbaden}%
+  }
+  \field{year}{2013}
+\endentry
+
+\entry{SWB-097965316}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Rech}{R.}%
+     {J{\"o}rg}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Heise}%
+  }
+  \keyw{; Ethernet}
+  \strng{namehash}{RJ1}
+  \strng{fullhash}{RJ1}
+  \field{sortinit}{R}
+  \field{edition}{1. Aufl.}
+  \field{isbn}{3-88229-186-9}
+  \field{title}{Ethernet : Technologien und Protokolle f{\"u}r die
+  Computervernetzung; [Standard-Ethernet, Fast Ethernet, Gigabit-Ethernet,
+  10Gigabit-Ethernet, Wireless Ethernet]}
+  \list{location}{1}{%
+    {Hannover}%
+  }
+  \field{year}{2002}
+\endentry
+
+\entry{SWB-098672061}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Siegmund}{S.}%
+     {Gerd}{G.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {H{\"u}thig}%
+  }
+  \keyw{; Telekommunikationsnetz}
+  \strng{namehash}{SG1}
+  \strng{fullhash}{SG1}
+  \field{sortinit}{S}
+  \field{edition}{5., v{\"o}llig neu bearb. und erw. Aufl.}
+  \field{isbn}{3-7785-3954-X; 3-8266-5021-2}
+  \field{note}{Titel sp{\"a}ter ersch. im Verl. moderne industrie Buch AG \&
+  Co.KG. Teilw. ersichtlich vom Etikett des Verl. moderne industrie Buch mit
+  neuer 2. ISBN}
+  \field{title}{Technik der Netze}
+  \verb{url}
+  \verb http://www.gbv.de/dms/ilmenau/toc/342664387siegm.PDF
+  \endverb
+  \list{location}{1}{%
+    {Heidelberg}%
+  }
+  \field{year}{2002}
 \endentry
 
 \entry{SWB-107223570}{book}{}
