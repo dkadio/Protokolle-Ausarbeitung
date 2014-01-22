@@ -16,6 +16,21 @@
   {}
 \endgroup
 
+\entry{duplex}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {E.~Moltrecht}{E.~M.}%
+     {DJ4UF}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{EMD1}
+  \strng{fullhash}{EMD1}
+  \field{sortinit}{E}
+  \field{howpublished}{http://www.dj4uf.de/lehrg/a15/Bild15-8.gif}
+  \field{title}{Visualisierung Duplex {\"U}bertragung}
+\endentry
+
 \entry{koax_kabel}{misc}{}
   \name{author}{1}{}{%
     {{}%
@@ -196,6 +211,21 @@
     {Heidelberg}%
   }
   \field{year}{2002}
+\endentry
+
+\entry{ethernet_frame}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Tampa Bay~Interactive}{T.~B.~I.}%
+     {Inc.}{I.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{TBII1}
+  \strng{fullhash}{TBII1}
+  \field{sortinit}{T}
+  \field{howpublished}{http://telecom.tbi.net/frmlan.html}
+  \field{title}{Ethernet 802.3 Frame}
 \endentry
 
 \entry{SWB-107223570}{book}{}
