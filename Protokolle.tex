@@ -192,32 +192,20 @@ Ethernet ist keiner bestimmten Netzwerk Topologie zuzuordnen. Heute gebräuchlic
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
 
-Während in einzelnen Gebäuden meist LANS zum Einsatz kommen, werden für die weitreichende Verbindungen meist Punkt-zu-Punkt-Standleitungen eingesetzt. Diese Leitungen verbinden weit entfernte Router miteinander, hinter denen LANS mit mehren Hosts wie Personal-Computer, Workstation oder Server angeschlossen sind. Die Verbindung in die Außenwelt von diesen LANS aus, wird eben genau über diese Router laufen. Und hier kommt das PPP (Point-to-Point Protocol) zum Einsatz.
+Während in einzelnen Gebäuden meist LANS zum Einsatz kommen, werden für die weitreichende Verbindungen meist Punkt-zu-Punkt-Standleitungen eingesetzt. Diese Leitungen verbinden weit entfernte Router miteinander, hinter denen LANS mit mehren Hosts wie Personal-Computer, Workstation oder Server angeschlossen sein können. Die Verbindung in die Außenwelt von diesen LANS aus, wird eben genau über diese Router laufen. Und hier kommt das PPP (Point-to-Point Protocol) zum Einsatz.
 
 PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFCs weiter ausgearbeitet wie in RFC 1662 und 1663.
 
-Das PPP baut eine Verbindung grob in 5 Schritten auf. Dazu gehört unteranderem der Verbindungsaufbau und die Konfigurationsaushandlung. Die Aushandlung findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen und kann zum Aktivieren und Testen einer Leitung als auch zum Verhandeln von verschiedenen Parametern die für das PPP wichtig sind und zum Beenden nicht mehr gebrauchten Verbindungen verwendet werden.
+Das Protokoll unterstützt Fehlererkennung, dynamische IP-Adressen Vergebung bei Verbindungsaufbau, Berechtigungsprüfung und mehrere Protokolle.
+
+Das PPP umfasst desweiteren noch ein ganzes weiteres Protokoll das zum Aktivieren und Testen einer Leitung als auch zum Verhandeln von verschiedenen Parametern die für das PPP wichtig sind und zum Beenden nicht mehr gebrauchten Verbindungen verwendet wird. Die Aushandlung findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
 
 Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer) das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese nennt man Network Control Protocol (NCP), so das auf jeder unterstützten Vermittlungsschicht ein anderes NCP laufen kann. 
 
 Beispiele für NCP sind IPCP, AppleTalk Control Protokoll oder IPXCP. Das IPCP steht für IP Control Protocol und wird zur unter anderem zur IP-Vergabe genutzt.
 
 
-Die einzigen Vorraussetzungen an die Physikalische Schicht ist eine geswitchte oder dedizierte Duplex-Verbindung.
-
-\subsection{Ablauf des PPP}
-
-\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}
-
-
-
-Das Verfahren
-
-Um die Kommunikationüber eine Punkt-zu-Punkt-Verbindung aufzubauen, sendet das Ursprungs-PPP zuerst LCP-Frames, um die Datenverbindung zu konfigurieren und zu testen. Nachdem die Verbindung aufgebaut und optionale Einrichtungen entsprechend den Anforderungen der LCP ausgehandelt wurden, sendet das Ursprungs-PPP NCP-Frames, mit denen ein oder mehrere Protokolle der Vermittlungsschicht ausgewählt und konfiguriert werden. Wenn jedes der ausgewählten Protokolle der Vermittlungsschicht konfiguriert ist, können Pakete von jedem Vermittlungsschicht-Protokoll über die Verbindung gesendet werden. Die Verbindung bleibt solange erhalten, bis sie von LCP- oder NCP-Frames explizit geschlossen wird, oder wenn ein externes Ereignis dies veranlaß (z.B. wenn ein Timer abgelaufen ist oder ein Benutzer eingreift).
-
-Anforderungen an die physikalische Schicht
-
-Einziges Muß für PPP ist eine Duplex-Verbindung: Eine dediziert oder geswitchte. Diese kann entweder im asynchronen oder synchronen bit-seriellen Modus betrieben werden und ist für die PPP-Frames der Verbindungsschicht transparent. PPP gibt keine Beschränkung der Übertragungsrate vor.
+\subsection{LCP Verhandlung}
 
 
 Das Verbindungssteuerungs-Protokoll (Link-Control Protolcol - LCP) des PPP stellt eine Methode für die Etablierung, Konfigurierung, Verwaltung und Beendigung einer Punkt-zu-Punkt-Verbindung zur Verfügung. LCP durchläuft vier einzelne Phasen:
@@ -229,22 +217,38 @@ Es gibt drei Klassen von LCP-Frames. Verbindungsaufbau-Frames dienen dazu, eine 
 
 Diese Frames werden für die Durchführung der einzelnen LCP-Phasen benötigt.
 
+Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese verhalten festhalten. 
+
+Im folgenden die einzelnen Typen und ihre Bedeutung:
+
+\begin{itemize}
+	\item Configure-request	- Liste der vorgeschlagenen Optionen und Werte
+	\item Configure-ack		- Alle Optionen werden angenommen
+	\item	Configure-nak		- Einige Optionen werden nicht angenommen
+	\item Configure-reject	- Einige Optionen können nicht Verhandelt werden
+	\item Terminate-request	- Anforderungen zum Trennen der Verbindung
+	\item Terminate-ack		- Verbindung wurde getrennt
+	\item Code-reject		- Unbekannte Anforderungen erhalten
+	\item Protocol-reject		- Unbekanntes Protocol angefordert
+	\item Echo-request		- Anforderungen, den Rahmen zurückzusenden
+	\item Echo-reply		- Rückgabe des Rahmens
+	\item	Discard-request	- Rahmen verwerfen (für Testzwecke)
+\end{itemize} 
 
 
 
+\subsection{Verbindungsablauf des PPP}
 
+Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Zeichnung.
+Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
+Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
 
-
-
-
-\subsection{Fehlererkennungs}
-
-
+\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}
 
 
 \subsubsection{Frames}
 
-Das PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Dieses Tatsache übernimmt ebenfalls die Aufgabe der Fehlererkennung
+Das PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung
 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
