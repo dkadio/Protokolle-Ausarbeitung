@@ -203,6 +203,25 @@ Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Ver
 \subsubsection{Adressierung}
 LAPD nutzt zur Adressierung der Teilnehmer die TEI, Terminal Endpoint Identifier. Die TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben.
 
+\subsection{Frames}
+LAPD teilt die Daten der Schicht 3 in Frames auf. Ein Frame ist ist folgendermaßen aufgebaut:
+
+\begin{itemize}
+	\item Blockbegrenzung
+	\item Adressfeld
+	\item Steuerfeld
+	\item Daten
+	\item Blockprüfung
+	\item Blockbegrenzung
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Grafiken/LAPD-Rahmen.jpg}
+	\caption{LAPD Frame \cite{lapd_rahmen}}
+	\label{lapd_frame}
+\end{figure}
+
 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  

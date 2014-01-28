@@ -27,8 +27,9 @@
   \strng{namehash}{EMD1}
   \strng{fullhash}{EMD1}
   \field{sortinit}{E}
-  \field{howpublished}{http://www.dj4uf.de/lehrg/a15/Bild15-8.gif}
-  \field{title}{Visualisierung Duplex {\"U}bertragung}
+  \field{howpublished}{http://www.dj4uf.de/}
+  \field{title}{Unterschied Duplex Halbduplex}
+  \field{year}{2014}
 \endentry
 
 \entry{itu_920}{misc}{}
@@ -100,6 +101,22 @@
   \field{howpublished}{\url{http://www.leisch.org/images/osi.jpg}}
   \field{title}{Das ISO/OSI Modell}
   \field{year}{2001}
+\endentry
+
+\entry{lapd_rahmen}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Marx}{M.}%
+     {Ingenieur-B{\"u}ro}{I.-B.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{MIB1}
+  \strng{fullhash}{MIB1}
+  \field{sortinit}{M}
+  \field{howpublished}{http://embsys.eu/}
+  \field{title}{LAPD Rahmen}
+  \field{year}{2014}
 \endentry
 
 \entry{SWB-381839486}{misc}{}
@@ -235,8 +252,9 @@
   \strng{namehash}{TBII1}
   \strng{fullhash}{TBII1}
   \field{sortinit}{T}
-  \field{howpublished}{http://telecom.tbi.net/frmlan.html}
+  \field{howpublished}{http://telecom.tbi.net/novphy2.gif}
   \field{title}{Ethernet 802.3 Frame}
+  \field{year}{2004}
 \endentry
 
 \entry{SWB-107223570}{book}{}
