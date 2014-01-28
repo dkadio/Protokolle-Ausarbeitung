@@ -67,7 +67,7 @@
 			\begin{minipage}{0.4\textwidth}
 				\begin{flushleft} \large
 					\emph{Autoren:}\\
-					Deniz \\
+					Deniz Kadiogullatri 3553892\\
 					Christoph Drost 3576450
 				\end{flushleft}
 			\end{minipage}
@@ -206,6 +206,98 @@ LAPD nutzt zur Adressierung der Teilnehmer die TEI, Terminal Endpoint Identifier
 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
+
+Während in einzelnen Gebäuden meist LANS zum Einsatz kommen, werden für die weitreichende Verbindungen meist Punkt-zu-Punkt-Standleitungen eingesetzt. Diese Leitungen verbinden weit entfernte Router miteinander, hinter denen LANS mit mehren Hosts wie Personal-Computer, Workstation oder Server angeschlossen sein können. Die Verbindung in die Außenwelt von diesen LANS aus, wird eben genau über diese Router laufen. Und hier kommt das PPP (Point-to-Point Protocol) zum Einsatz.
+
+PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFCs weiter ausgearbeitet wie in RFC 1662 und 1663.
+
+Das Protokoll unterstützt Fehlererkennung, dynamische IP-Adressen Vergebung bei Verbindungsaufbau, Berechtigungsprüfung und mehrere Protokolle.
+
+Das PPP umfasst desweiteren noch ein ganzes weiteres Protokoll das zum Aktivieren und Testen einer Leitung als auch zum Verhandeln von verschiedenen Parametern die für das PPP wichtig sind und zum Beenden nicht mehr gebrauchten Verbindungen verwendet wird. Die Aushandlung findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
+
+Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer) das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese nennt man Network Control Protocol (NCP), so das auf jeder unterstützten Vermittlungsschicht ein anderes NCP laufen kann. 
+
+Beispiele für NCP sind IPCP, AppleTalk Control Protokoll oder IPXCP. Das IPCP steht für IP Control Protocol und wird zur unter anderem zur IP-Vergabe genutzt.
+
+
+\subsection{LCP Verhandlung}
+
+
+Das Verbindungssteuerungs-Protokoll (Link-Control Protolcol - LCP) des PPP stellt eine Methode für die Etablierung, Konfigurierung, Verwaltung und Beendigung einer Punkt-zu-Punkt-Verbindung zur Verfügung. LCP durchläuft vier einzelne Phasen:
+In der ersten Phase erfolgt der Verbindungsaufbau, und die Konfiguration wird ausgehandelt. Bevor irgendwelche Datagramme der Vermittlungsschicht (z.B. IP) ausgetauscht werden können, muß LCP die Verbindung erüffnet und Konfigurationsparameter ausgehandelt haben. Diese Phase ist beendet, wenn sowohl ein Frame gesendet als auch einer empfangen wurde, der die Konfigurationsbestöätigung enthält.
+Dann wird die Verbindungsqualität ermittelt. Diese Phase ist optional. In dieser Phase wird die Verbindung getestet, um festzustellen, ob die Qualität dafür ausreicht, daß die Protokolle der Vermittlungsschicht gestartet werden können. LCP kann die Übertragung von Protokoll-Informationen der Vermittlungsschicht so lange hinauszögern. bis diese Phase beendet ist.
+Zu diesem Zeitpunkt erfolgt die Konfigurationaushandlung des Vermittlungsschicht-Protokolls. Nachdem LCP die Phase der Qualitätsprüfung beendet hat, können die Vermittlungsschicht-Protokolle vom entsprechenden NCP einzeln konfiguriert werden und jederzeit gestartet oder beendet werden. Wenn LCP die Verbindung beendet, informiert es die Protokolle der Vermittlungsschicht, damit diese entsprechende Schritte einleiten.
+Zuletzt erfolgt die Verbindungsbeendigung. LCP kann die Verbindung jederzeit beenden. Eine Verbindung wird im allgemeinen auf Anforderungen eines Benutzers beendet, kann aber auch aufgrund eines physischen Ereignisses beendet werden, z.B. wenn das Trägersignal verloren geht oder ein Timer abläuft.
+Es gibt drei Klassen von LCP-Frames. Verbindungsaufbau-Frames dienen dazu, eine Verbindung aufzubauen und zu konfigurieren. Verbindungsbeendigungs-Frames dienen dazu, eine Verbindung zu beenden, während Verbindungsverwaltungs-Frames eine Verbindung verwalten und debuggen.
+
+Diese Frames werden für die Durchführung der einzelnen LCP-Phasen benötigt.
+
+Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese verhalten festhalten. 
+
+Im folgenden die einzelnen Typen und ihre Bedeutung:
+
+\begin{itemize}
+	\item Configure-request	- Liste der vorgeschlagenen Optionen und Werte
+	\item Configure-ack		- Alle Optionen werden angenommen
+	\item	Configure-nak		- Einige Optionen werden nicht angenommen
+	\item Configure-reject	- Einige Optionen können nicht Verhandelt werden
+	\item Terminate-request	- Anforderungen zum Trennen der Verbindung
+	\item Terminate-ack		- Verbindung wurde getrennt
+	\item Code-reject		- Unbekannte Anforderungen erhalten
+	\item Protocol-reject		- Unbekanntes Protocol angefordert
+	\item Echo-request		- Anforderungen, den Rahmen zurückzusenden
+	\item Echo-reply		- Rückgabe des Rahmens
+	\item	Discard-request	- Rahmen verwerfen (für Testzwecke)
+\end{itemize} 
+
+
+
+\subsection{Verbindungsablauf des PPP}
+
+Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Zeichnung.
+Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
+Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
+
+\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}
+
+
+\subsubsection{Frames}
+
+Das PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung
+
+Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
+
+\includegraphics[width=1\textwidth]{Grafiken/ppp-frame.jpg}
+
+\subsubsection{Flag}
+
+Das Flag besteht am Anfang wie am Ende aus einem Byte (011111110) dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen das der Frame zu Ende ist.
+
+
+\subsubsection{Adress}
+
+Das Adressfeld steht immer auf einem festen Wert und zwar aus acht mal eins. Dies dient dazu das alle Stationen den Rahmen akzeptieren und zum vermeiden das Verbindungsadressen zugewiesen werden müssen. Da dieses Feld in der Standartkonfiguration immer gleich ist, gibt es wie auch bei dem Steuerungsfeld einen die Möglichkeit zwischen zwei Parteien diese Felder einfach entfallen zu lassen und damit zwei Byte pro Rahmen einzusparen.
+
+
+\subsubsection{Steuerung}
+
+Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnumerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche Übertragung zu realisieren. Die genauen Details sind in RFC 1663 definiert, die jedoch in der Praxis nicht häufig eingesetzt werden.
+
+
+\subsubsection{Protokoll}
+
+Das vierte Feld, Protokoll, gibt an welche Art von Paket in den Nutzdaten übertragen wird. Dies können beispielsweise LCP, NCP, IP, IPX und andere Protokolle sein. Normalerweise ist die Größe des Feldes auf zwei Byte festgelegt, es ist jedoch möglich über das LCP auf ein Byte runter zu handeln.
+
+
+\subsubsection{Nutzdaten}
+
+Die große des Feldes Nutzdaten wird üblicherweise von den Parteien ausgehandelt und festgelegt. Findet dieser Prozess über das LCP nicht statt so ist das Feld standardmäßig auf 1.500 Byte festgelegt.
+Wenn es nicht genug Daten geben sollte um ein Frame zu füllen kann über Padding dieses auch bei Bedarf aufgefüllt werden.
+
+\subsubsection{Prüfsumme}
+
+Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum überprüfen ob der Rahmen richtig gesendet worden ist.
+
 
 \section{Bedeutungen der Protokolle im \osi }
 
