@@ -201,7 +201,7 @@ LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 
 Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
 
 \subsubsection{Adressierung}
-LAPD nutzt zur Adressierung der Teilnehmer die TEI, Terminal Endpoint Identifier. Die TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben.
+LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Den TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben.
 
 \subsection{Frames}
 LAPD teilt die Daten der Schicht 3 in Frames auf. Ein Frame ist ist folgendermaßen aufgebaut:
@@ -214,6 +214,8 @@ LAPD teilt die Daten der Schicht 3 in Frames auf. Ein Frame ist ist folgenderma�
 	\item Blockprüfung
 	\item Blockbegrenzung
 \end{itemize}
+
+Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. \textcolor{red}{\textbf{Sollen wir das noch genauer ausführen?}}  . Das Adressfeld besteht aus 2 Bytes, die die SAPI und die TEI enthalten. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2.
 
 \begin{figure}[H]
 	\centering
