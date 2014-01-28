@@ -5,3 +5,5 @@
 *.gz
 *.toc
 *.log
+*.aux
+*-blx.bib
