@@ -314,7 +314,12 @@ Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus 
 Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
 Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
 
-\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}	
+	\caption{Übersicht PPP Verbindungsaufbau \cite{*}}
+	\label{aufbau_ppp-verbindung}
+\end{figure}
 
 
 \subsubsection{Frames}
@@ -323,7 +328,12 @@ Das PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahme
 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
-\includegraphics[width=1\textwidth]{Grafiken/ppp-frame.jpg}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Grafiken/ppp-frame.jpg}	
+	\caption{Darstellung eines PPP Frames \cite{*}}
+	\label{ppp_frame}
+\end{figure}
 
 \subsubsection{Flag}
 
