@@ -48,6 +48,12 @@
 \usepackage[babel,german=guillemets]{csquotes}
 \bibliography{quellen.bib} 
 
+% Aufnahme von \paragraph in das Inhaltsverzeichnis 
+\setcounter{tocdepth}{4}  
+
+%Nummerierung vertiefen, \paragraph kommt mit ins Inhaltsverzeichnis
+\setcounter{secnumdepth}{4} 
+
 
 %Eigene Kommandos
 % Osi Modell
@@ -200,9 +206,59 @@ LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 
 \subsubsection{Der D-Kanal}
 Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
 
-\subsubsection{Adressierung}
-LAPD nutzt zur Adressierung der Teilnehmer die TEI, Terminal Endpoint Identifier. Die TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben.
+\subsubsection{Adressierung \label{tei}}
+LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
+\subsubsection{Frames}
+LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche Frametypen benutzt. Ein Frame ist ist folgendermaßen aufgebaut:
+
+\begin{itemize}
+	\item Blockbegrenzung
+	\item Adressfeld
+	\item Steuerfeld
+	\item Daten
+	\item Blockprüfung
+	\item Blockbegrenzung
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Grafiken/lapd_frame.jpg}
+	\caption{LAPD Frame \cite{lapd_rahmen}}
+	\label{lapd_frame}
+\end{figure}
+
+\paragraph{Blockbegrenzung}
+Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. \textcolor{red}{\textbf{Sollen wir das noch genauer ausführen?}}  S.448 Technik der Netze.  
+
+\paragraph{Adressfeld}
+Das Adressfeld besteht aus 2 Bytes. Es enthält den SAPI und den TEI, die je 1 Byte groß sind. Die Größe 1 Byte ist eigentlich ungenau, da man die Bytes wieder genauer aufteilen kann. Jedes dieses Bytes hat ein EA (Extended Adress), damit wird angegeben, ob dem Byte noch weitere folgen. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2. Er besteht aus 6 Bit, zusätzlich sind in dem Byte das C/R Bit und das EA Bit. Das C/R-Feld kennzeichnet, ob das Paket eine Anweisung (Command) für den Empfänger enthält oder ob es eine Antwort (Response) auf eine zuvor erhaltene Anweisung enthält. 
+
+Aktuell sind 3 Typen des SAPI definiert \cite{SWB-098672061}. 
+\begin{itemize}
+	\item Die gesicherte Übermittlung von Signalisierungsinformationen (SAPI 0)
+	\item Die Übertragung von paketvermittelteten Daten (SAPI 16)
+	\item Die Festlegung von eindeutigen TEI (SAPI 63)
+\end{itemize}
+
+
+
+Der TEI wurde bereits in~\ref{tei} genauer beschrieben. Im Byte des TEI wird EA = 1 gesetzt, da der TEI das letzte Adress Byte ist.
+
+\paragraph{Steuerfeld}
+LAPD kennt 4 Rahmentypen. Sie haben verschiedene Funktionen, die im Steuerfeld gekennzeichnet werden. Die Informationen zu dem Steuerfeld stammen komplett aus \cite{SWB-098672061}.
+
+\subparagraph{I-Rahmen}
+Der I-Rahmen, Informationsrahmen, dient der Übermittlung von Schicht 3 Informationen. Der I-Rahmen ist der einzige, der einen Sendefolgezähler enthält.
+
+\subparagraph{S-Rahmen}
+Der S-Rahmen, Steurrahmen, dient zum Quittieren von empfangenen Rahmen. Mit ihm werden außerdem Zustandsmeldungen (z.B. empfangsbereit) gesendet und bei groben Protokollfehlern andere Rahmen abgewiesen.
+
+\subparagraph{U-Rahmen}
+Der U-Rahmen, umnummerierter Rahmen, dient der Übertragung von Steuerkriterien, für die eine Nummerierung nicht möglich oder nicht nötig ist. Beispielsweise kann man dafür das Kommando für die Initialisierung (SABME) einer Schicht 2 Verbindung, oder die Abweisung von fehlerhaften Rahmen (FRMR) nennen.
+
+\subparagraph{UI-Rahmen}
+Der UI-Rahmen, umnummerierter Informationsrahmen, ist eine Spezialität des LAPD Protokolls. Er wird für für spezielle Prozeduren im Zusammenhang mit der P-MP-Konfiguration am Basisanschluss benötigt und überträgt die Informationen des Layer 2 (TEI Management) oder des Layer 3 (kommender Ruf). Er wird genutzt wenn vorher noch keine Layer 2 Verbindung eingerichtet wurde. UI-Rahmen werden nicht quittiert.
 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
