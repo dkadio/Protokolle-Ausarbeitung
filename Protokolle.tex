@@ -246,7 +246,7 @@ Aktuell sind 3 Typen des SAPI definiert \cite{SWB-098672061}.
 Der TEI wurde bereits in~\ref{tei} genauer beschrieben. Im Byte des TEI wird EA = 1 gesetzt, da der TEI das letzte Adress Byte ist.
 
 \paragraph{Steuerfeld}
-LAPD kennt 4 Rahmentypen. Sie haben verschiedene Funktionen, die im Steuerfeld gekennzeichnet werden.
+LAPD kennt 4 Rahmentypen. Sie haben verschiedene Funktionen, die im Steuerfeld gekennzeichnet werden. Die Informationen zu dem Steuerfeld stammen komplett aus \cite{SWB-098672061}.
 
 \subparagraph{I-Rahmen}
 Der I-Rahmen, Informationsrahmen, dient der Übermittlung von Schicht 3 Informationen. Der I-Rahmen ist der einzige, der einen Sendefolgezähler enthält.
@@ -256,6 +256,9 @@ Der S-Rahmen, Steurrahmen, dient zum Quittieren von empfangenen Rahmen. Mit ihm 
 
 \subparagraph{U-Rahmen}
 Der U-Rahmen, umnummerierter Rahmen, dient der Übertragung von Steuerkriterien, für die eine Nummerierung nicht möglich oder nicht nötig ist. Beispielsweise kann man dafür das Kommando für die Initialisierung (SABME) einer Schicht 2 Verbindung, oder die Abweisung von fehlerhaften Rahmen (FRMR) nennen.
+
+\subparagraph{UI-Rahmen}
+Der UI-Rahmen, umnummerierter Informationsrahmen, ist eine Spezialität des LAPD Protokolls. Er wird für für spezielle Prozeduren im Zusammenhang mit der P-MP-Konfiguration am Basisanschluss benötigt und überträgt die Informationen des Layer 2 (TEI Management) oder des Layer 3 (kommender Ruf). Er wird genutzt wenn vorher noch keine Layer 2 Verbindung eingerichtet wurde. UI-Rahmen werden nicht quittiert.
 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
