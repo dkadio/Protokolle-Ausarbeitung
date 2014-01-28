@@ -150,13 +150,24 @@ Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportier
  
 Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
 
-\subsection{Zugriff auf das Medium}
+\subsubsection{Zugriff auf das Medium}
 Historisch gesehen nutzt Ethernet das Übertragungsmedium als Shared Medium. Die einzelnen Teilnehmer wurden am selben Koaxialkabel über T-Stücke angeschlossen. Um Kollisionen zu vermeiden, wurde ein geeignetes Verfahren zur Vermeidung benötigt. Von einer Kollision spricht man, wenn mehrere Teilnehmer gleichzeitig auf das Medium zugreifen würden, also Signale aussenden. Die Signale würden sich gegenseitig überlagern und wären nicht mehr nutzbar. Bei Ethernet wird CSMA/CD eingesetzt. Bei diesem Verfahren wird vor dem Senden geprüft, ob die Leitung frei ist. Erst wenn die Leitung frei ist wird gesendet (Carrier Sense). Wenn zufällig mehrere Teilnehmer gleichzeitig ein Signal aussenden (Multiple Access) kommt es dennoch zu Kollisionen. Der/Die Sender prüfen während dem Senden, ob es zu Kollisionen kommt (Collision Detect) und brechen ihre Übertragung im Fall einer Kollision ab. Nach einem Abbruch wird eine zufällige Zeit gewartet bis erneut gesendet wird.
 
+ \subsubsection{Adressierung}
+ Ethernet nutzt zur Adressierung von Teilnehmern deren MAC-Adresse. MAC-Adressen, Media Access Control Adress, sind Hardwareadressen und werden weltweit eindeutig vergeben. Sie bestehen aus 6 Byte und sind nach folgendem Muster aufgebaut: 
  
+ Hersteller--Hersteller--Hersteller--xx--xx--xx 
 
+Der Herstellerteil, auch Organizationally  Unique Identifier (OUI), wird von der IEEE vergeben. Jeder Hersteller hat seinen eigenen Bereich, der durch die ersten 3 Bytes bestimmt wird. Die letzten 3 Bytes werden vom Hersteller selber vergeben. Dabei ist der Hersteller für die eindeutige Vergabe der letzten 3 Bytes verantwortlich. Einige Hersteller haben mittlerweile mehrere eigene Bereiche.
 \subsection{LAPD}
-\blindtext
+LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 2. Es wird genutzt um Layer 3 Informationen zwischen den Teilnehmer des ISDN Netzwerks zu übertragen. Für diese Übertragung wird der D-Kanal genutzt.
+
+\subsubsection{Der D-Kanal}
+Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
+
+\subsubsection{Adressierung}
+LAPD nutzt zur Adressierung der Teilnehmer die TEI, Terminal Endpoint Identifier. Die TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben.
+
 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  

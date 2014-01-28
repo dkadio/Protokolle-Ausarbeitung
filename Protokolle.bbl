@@ -16,6 +16,17 @@
   {}
 \endgroup
 
+\entry{itu_920}{misc}{}
+  \field{sortinit}{I}
+  \field{number}{920}
+  \field{title}{ITU-T Recommendation Q.920}
+  \list{institution}{1}{%
+    {ITU-T}%
+  }
+  \field{type}{Recommendation}
+  \field{year}{1994}
+\endentry
+
 \entry{koax_kabel}{misc}{}
   \name{author}{1}{}{%
     {{}%
