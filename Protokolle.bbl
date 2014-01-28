@@ -16,6 +16,7 @@
   {}
 \endgroup
 
+<<<<<<< HEAD
 \entry{itu_920}{misc}{}
   \field{sortinit}{I}
   \field{number}{920}
@@ -25,6 +26,21 @@
   }
   \field{type}{Recommendation}
   \field{year}{1994}
+=======
+\entry{duplex}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {E.~Moltrecht}{E.~M.}%
+     {DJ4UF}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{EMD1}
+  \strng{fullhash}{EMD1}
+  \field{sortinit}{E}
+  \field{howpublished}{http://www.dj4uf.de/lehrg/a15/Bild15-8.gif}
+  \field{title}{Visualisierung Duplex {\"U}bertragung}
+>>>>>>> e601be07e201d567353ae4e27c5703905a805cf7
 \endentry
 
 \entry{koax_kabel}{misc}{}
@@ -207,6 +223,21 @@
     {Heidelberg}%
   }
   \field{year}{2002}
+\endentry
+
+\entry{ethernet_frame}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Tampa Bay~Interactive}{T.~B.~I.}%
+     {Inc.}{I.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{TBII1}
+  \strng{fullhash}{TBII1}
+  \field{sortinit}{T}
+  \field{howpublished}{http://telecom.tbi.net/frmlan.html}
+  \field{title}{Ethernet 802.3 Frame}
 \endentry
 
 \entry{SWB-107223570}{book}{}
