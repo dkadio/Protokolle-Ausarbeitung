@@ -32,6 +32,22 @@
   \field{year}{2014}
 \endentry
 
+\entry{lapd_rahmen}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Haden}{H.}%
+     {Rhys}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{HR1}
+  \strng{fullhash}{HR1}
+  \field{sortinit}{H}
+  \field{howpublished}{rhyshaden.com}
+  \field{title}{LAPD Rahmen}
+  \field{year}{2014}
+\endentry
+
 \entry{itu_920}{misc}{}
   \field{sortinit}{I}
   \field{number}{920}
@@ -101,22 +117,6 @@
   \field{howpublished}{\url{http://www.leisch.org/images/osi.jpg}}
   \field{title}{Das ISO/OSI Modell}
   \field{year}{2001}
-\endentry
-
-\entry{lapd_rahmen}{misc}{}
-  \name{author}{1}{}{%
-    {{}%
-     {Marx}{M.}%
-     {Ingenieur-B{\"u}ro}{I.-B.}%
-     {}{}%
-     {}{}}%
-  }
-  \strng{namehash}{MIB1}
-  \strng{fullhash}{MIB1}
-  \field{sortinit}{M}
-  \field{howpublished}{http://embsys.eu/}
-  \field{title}{LAPD Rahmen}
-  \field{year}{2014}
 \endentry
 
 \entry{SWB-381839486}{misc}{}
