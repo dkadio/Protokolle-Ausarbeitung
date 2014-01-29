@@ -58,6 +58,7 @@
 %Eigene Kommandos
 % Osi Modell
 \newcommand{\osi}{ISO/OSI Referenzmodell\xspace}
+\newcommand{\fcs}{FCS, Frame Checking Sequence,\xspace}
 
 %Ende Präambel
 	
@@ -207,7 +208,7 @@ Um zu verstehen, warum beide Bezeichnungen möglich sind muss man wieder die His
 \paragraph{Nutzdaten}
 Die Nutzdaten sind die Daten, die eigentlich übertragen werden sollen. Das Feld mit den Nutzdaten hat eine Mindestlänge von 46 Byte  und eine Maximallänge von 1500 Byte. Die Mindestlänge kommt von der Anforderung des CSMA/CD, wonach ein Frame mindestens 64 Byte haben muss. Zieht man von den 64 Byte die Headerlänge (14 Byte) und die Checksumme (4 Byte) ab kommt man auf 46 Byte. Wird die Mindestlänge der Nutzdaten unterschritten, wird das Feld mit sogenannten Pads aufgefüllt. Sie haben den Wert 00.
 \paragraph{Checksumme \label{checksumme}}
-Die letzten 4 Bytes eines Ethernet Frames sind das \glqq Frame Check Sequence Field\grqq~(FCS). Das FCS dient der Sicherstellung, dass der Frame korrekt übertragen wurde. Der Inhalt dieses Feldes wird mit durch CRC-Algorithmus errechnet. Sowohl Sender als auch Empfänger wenden ihn an, kommen bei der Berechnung unterschiedliche Werte heraus, kann davon ausgegangen werden, dass auf Layer 1 Bits verfälscht wurden. Neben dem CRC Verfahren werden zur Prüfung auch andere Kriterien zur Prüfung eines Frames angewandt:
+Die letzten 4 Bytes eines Ethernet Frames sind das \fcs oder Frame Checking Field. Das FCS dient der Sicherstellung, dass der Frame korrekt übertragen wurde. Der Inhalt dieses Feldes wird mit durch CRC-Algorithmus errechnet. Sowohl Sender als auch Empfänger wenden ihn an, kommen bei der Berechnung unterschiedliche Werte heraus, kann davon ausgegangen werden, dass auf Layer 1 Bits verfälscht wurden. Neben dem CRC Verfahren werden zur Prüfung auch andere Kriterien zur Prüfung eines Frames angewandt:
 \begin{itemize}
 	\item Die Framelänge stimmt nicht mit dem Längenfeld überein (nur bei IEEE 802.3)
 	\item Die Framelänge ist kein ganzzahliges Vielfache eines Bytes
@@ -220,10 +221,7 @@ Ethernet ist keiner bestimmten Netzwerk Topologie zuzuordnen. Heute gebräuchlic
 \subsection{LAPD}
 LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 2. Es wird genutzt um Layer 3 Informationen zwischen den Teilnehmer des ISDN Netzwerks zu übertragen. Für diese Übertragung wird der D-Kanal genutzt.
 
-\subsubsection{Der D-Kanal}
-Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
-
-\subsection{Gebräuchliche Medien des LAPD}
+\subsubsection{Gebräuchliche Medien des LAPD}
 Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. Für  $S_0$ werden üblicherweise 4 Draht Kupfer Verkabelungen verwendet, für $U_{K0}$ eine Kupfer Doppelader.
 \begin{figure}[H]
 \begin{minipage}[hbt]{.35\linewidth}
@@ -239,6 +237,10 @@ Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. F�
 	\label{cu_kabel}
 \end{minipage}
 \end{figure}
+
+
+\subsubsection{Der D-Kanal}
+Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
 
 \subsubsection{Adressierung \label{tei}}
 LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
@@ -262,7 +264,7 @@ LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche 
 	\label{lapd_frame}
 \end{figure}
 
-\paragraph{Blockbegrenzung}
+\paragraph{Blockbegrenzung \label{blockbegrenzung}}
 Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. \textcolor{red}{\textbf{Sollen wir das noch genauer ausführen?}}  S.448 Technik der Netze.  
 
 \paragraph{Adressfeld}
@@ -294,6 +296,17 @@ Der U-Rahmen, umnummerierter Rahmen, dient der Übertragung von Steuerkriterien,
 \subparagraph{UI-Rahmen}
 Der UI-Rahmen, umnummerierter Informationsrahmen, ist eine Spezialität des LAPD Protokolls. Er wird für für spezielle Prozeduren im Zusammenhang mit der P-MP-Konfiguration am Basisanschluss benötigt und überträgt die Informationen des Layer 2 (TEI Management) oder des Layer 3 (kommender Ruf). Er wird genutzt wenn vorher noch keine Layer 2 Verbindung eingerichtet wurde. UI-Rahmen werden nicht quittiert.
 
+\paragraph{Daten}
+Welche Daten übertragen werden, wird im Steuerfeld geregelt. Die reine Übertragung von Layer 3 Daten erfolgt nur in I-Blöcken. Die Blöcke werden nummeriert und von der Gegenseite bestätigt. Die Bestätigung kann durch einen I-Block oder durch einen S-Block bestätigt werden. Wie oft eine Bestätigung zu erfolgen hat, wird durch die Fenstergröße geregelt. Hier sind Werte zwischen eins und sieben möglich. Das Senden von weiteren Frames ist nur möglich, wenn die vorherigen bestätigt wurden. Bei einem Standard ISDN Basisanschluss ist die Fenstergröße eins, bei einem Primärmultiplexanschluss beträgt die Fenstergröße sieben. Das bedeutet, dass bei einem ISDN Basisanschluss nur ein Frame gesendet werden darf, wenn der vorherige bestätigt wurde. Bei einem Primärmultiplexanschluss können sieben Frames gesendet werden, bevor die erste Bestätigung erfolgt sein muss. Erfolgt die Bestätigung von einem Frame, kann ein weiteres gesendet werden.
+
+Ein I-Block darf maximal 260 Byte groß sein. Daraus ergibt sich eine maximal Gesamtgröße von 268 Byte pro LAPD Frame, wenn I-Blöcke genutzt werden.
+
+\paragraph{Blockprüfung}
+Die Blockprüfung findet bei sowohl beim Sender, als auch beim Empfänger statt. Die \fcs wird vom Sender errechnet und in das entsprechende Feld geschrieben. Der Empfänger errechnet sie auch und vergleicht es mit der des Senders. Unterscheiden sich die Werte, kann von einem Fehler bei der Übertragung ausgegangen werden.  
+ 
+\paragraph{Blockbegrenzung}
+Siehe ~\ref{blockbegrenzung}.
+ 
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
 
