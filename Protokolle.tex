@@ -49,7 +49,7 @@
 \bibliography{quellen.bib} 
 
 % Aufnahme von \paragraph in das Inhaltsverzeichnis 
-\setcounter{tocdepth}{4}  
+\setcounter{tocdepth}{3}  
 
 %Nummerierung vertiefen, \paragraph kommt mit ins Inhaltsverzeichnis
 \setcounter{secnumdepth}{4} 
@@ -156,7 +156,7 @@ Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportier
  
 Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
 
-\subsubsection{Adressierung}
+\subsubsection{Adressierung \label{ethernet_adresse}}
  Ethernet nutzt zur Adressierung von Teilnehmern deren MAC-Adresse. MAC-Adressen, Media Access Control Adress, sind Hardwareadressen und werden weltweit eindeutig vergeben. Sie bestehen aus 6 Byte und sind nach folgendem Muster aufgebaut: 
  
  Hersteller--Hersteller--Hersteller--xx--xx--xx 
@@ -179,11 +179,12 @@ In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet
  \subsubsection{Frames}
 Um Daten über Ethernet übertragen zu können werden sie in Frames aufgeteilt. Der Vorteil daran ist, dass ein Sender bei großen Übertragungen nicht das gesamte Netzwerk belegt und dass bei einer fehlerhaften Übertragung nur einzelne Frames neu versandt werden müssen. Der Ausdruck Frame kann wörtlich genommen werden. Die Nutzdaten werden in einen Rahmen (Frame) eingepackt.
 
-Neben den eigentlichen Nutzdaten enthält ein Frame:
+Ein Frame ist folgendermaßen aufgebaut:
 \begin{itemize}
-	\item Die Präambel (dient u.a. zur Synchronisation der Empfängerstationen) 
+	\item Die Präambel 
 	\item Die Hardware Quell- und Zieladresse
 	\item Ein Typ- oder Längenfeld
+	\item Nutzdaten
 	\item Eine Checksumme
 \end{itemize}
 \begin{figure}[H]
@@ -193,9 +194,25 @@ Neben den eigentlichen Nutzdaten enthält ein Frame:
 	\label{ethernet_frame}
 \end{figure}
 
+\paragraph{Präambel}
 Die Präambel enthält eine Bitfolge, die dem Empfänger signalisiert, dass ein Rahmen ankommt. Die Präambel besteht aus 8 Bytes mit einer alternierenden Folge aus 0 und 1. Die letzten 2 Bits im letzten Byte sind immer 1. Hier besteht ein kleiner Unterschied zwischen DIX und IEEE. Obwohl die Bitfolgen die gleichen sind, ist die Präambel im IEEE Standard formell in die 7 Byte lange Präambel und den 1 Byte langen Start-of-Frame-Delimiter aufgeteilt.
- 
-Die Adressen sind MAC Adressen. Dieser werden von der IEEE an die Hersteller von Ethernet Komponenten vergeben und müssen weltweit eindeutig sein.
+Sie dient u.a. zur Synchronisation der Empfängerstationen. 
+
+\paragraph{ Die Hardware Quell- und Zieladresse}
+Die Adressen sind MAC Adressen. Ihr Aufbau ist bereits in \ref{ethernet_adresse} beschrieben worden. Ein Ethernet Frame hat sowohl die Ziel- als auch die Senderadresse.
+
+\paragraph{Typ- oder Längenfeld}
+Um zu verstehen, warum beide Bezeichnungen möglich sind muss man wieder die Historie betrachten. Die DIC Gruppe nutzte das Feld als Typfeld. Dort wurde definiert, welche Daten des höheren Layers übertragen werden.  Im Standard IEEE 802.3 wird das Feld als Längenfeld genutzt. Um welches Feld es sich dabei genau handelt, kann anhand der Größe festgestellt werden. Die Typenbezeichnungen beginnen ab 1635 (0x0600). Ein Wert darunter kann nur eine Längenangabe sein. Jumbo- und Super Jumboframes sind abseits von IEEE 802.3 definiert.
+
+\paragraph{Nutzdaten}
+Die Nutzdaten sind die Daten, die eigentlich übertragen werden sollen. Das Feld mit den Nutzdaten hat eine Mindestlänge von 46 Byte  und eine Maximallänge von 1500 Byte. Die Mindestlänge kommt von der Anforderung des CSMA/CD, wonach ein Frame mindestens 64 Byte haben muss. Zieht man von den 64 Byte die Headerlänge (14 Byte) und die Checksumme (4 Byte) ab kommt man auf 46 Byte. Wird die Mindestlänge der Nutzdaten unterschritten, wird das Feld mit sogenannten Pads aufgefüllt. Sie haben den Wert 00.
+\paragraph{Checksumme \label{checksumme}}
+Die letzten 4 Bytes eines Ethernet Frames sind das \glqq Frame Check Sequence Field\grqq~(FCS). Das FCS dient der Sicherstellung, dass der Frame korrekt übertragen wurde. Der Inhalt dieses Feldes wird mit durch CRC-Algorithmus errechnet. Sowohl Sender als auch Empfänger wenden ihn an, kommen bei der Berechnung unterschiedliche Werte heraus, kann davon ausgegangen werden, dass auf Layer 1 Bits verfälscht wurden. Neben dem CRC Verfahren werden zur Prüfung auch andere Kriterien zur Prüfung eines Frames angewandt:
+\begin{itemize}
+	\item Die Framelänge stimmt nicht mit dem Längenfeld überein (nur bei IEEE 802.3)
+	\item Die Framelänge ist kein ganzzahliges Vielfache eines Bytes
+\end{itemize}
+
 
 \subsubsection{Topologie}
 Ethernet ist keiner bestimmten Netzwerk Topologie zuzuordnen. Heute gebräuchlich ist eine Sterntopologie, andere Formen sind aber auch möglich.   
