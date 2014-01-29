@@ -119,6 +119,24 @@
   \field{year}{2001}
 \endentry
 
+\entry{cu_doppelader}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {M{\"u}ller}{M.}%
+     {Stefan}{S.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{MS1}
+  \strng{fullhash}{MS1}
+  \field{sortinit}{M}
+  \field{howpublished}{de.wikipedia.org}
+  \field{title}{Telefon Hauptkabel (2000 DA), Verzweigungskabel (100 DA) und
+  Installationskabel (6 DA)}
+  \field{month}{01}
+  \field{year}{2006}
+\endentry
+
 \entry{SWB-381839486}{misc}{}
   \name{author}{1}{}{%
     {{}%
@@ -239,6 +257,22 @@
     {Heidelberg}%
   }
   \field{year}{2002}
+\endentry
+
+\entry{isdn_kabel}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Struktur}{S.}%
+     {Infra}{I.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{SI1}
+  \strng{fullhash}{SI1}
+  \field{sortinit}{S}
+  \field{howpublished}{http://blog.infra-struktur.de/}
+  \field{title}{ISDN Kabel}
+  \field{year}{2007}
 \endentry
 
 \entry{ethernet_frame}{misc}{}

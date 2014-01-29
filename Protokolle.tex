@@ -223,6 +223,23 @@ LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 
 \subsubsection{Der D-Kanal}
 Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
 
+\subsection{Gebräuchliche Medien des LAPD}
+Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. Für  $S_0$ werden üblicherweise 4 Draht Kupfer Verkabelungen verwendet, für $U_{K0}$ eine Kupfer Doppelader.
+\begin{figure}[H]
+\begin{minipage}[hbt]{.35\linewidth}
+	\centering
+	\includegraphics[width=0.9\textwidth]{Grafiken/isdn_kabel.jpg}	
+	\caption{Ein typisches IDSN Kabel  ($S_0$) \cite{isdn_kabel}}
+	\label{isdn_kabel}\end{minipage}
+\hfill
+\begin{minipage}[hbt]{.65\linewidth}
+	\centering
+	\includegraphics[width=0.9\linewidth]{Grafiken/kuperkabel.jpg}
+	\caption{Kupferkabel im Überblick \cite{cu_doppelader}}
+	\label{cu_kabel}
+\end{minipage}
+\end{figure}
+
 \subsubsection{Adressierung \label{tei}}
 LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
