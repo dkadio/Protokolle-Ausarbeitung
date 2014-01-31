@@ -247,6 +247,11 @@ Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. F�
 \subsubsection{Der D-Kanal}
 Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
 
+\subsubsection{Der Zugriff auf das Medium}
+LAPD ist das Signalisierungsprotokoll des ISDN. An einem $S_0$ Bus teilen sich bis zu 8 Teilnehmer einen D-Kanal. Der Zugriff durch die Teilnehmer ist priorisiert. Zur Zur Regelung, welcher Teilnehmer bevorrechtigt ist, gilt, je mehr logische Einsen den Teilnehmer identifizieren, desto niedriger ist die Priorität. So kann man sagen, dass der D-Kanal als Shared Medium genutzt wird. Um zu überprüfen, ob eine Kollision stattgefunden hat, gibt es den E-Kanal. Auf diesen wird der D-Kanal durchgeschleift. Der Teilnehmer kann anhand vom E-Kanal überprüfen, ob die Informationen, die er gesendet haben noch einmal bei ihm ankommen. Ist das der Fall, kann er davon ausgehen, dass es zu keiner Kollision mit den Signalen eines anderen Teilnehmers gekommen ist.
+
+Der $S_0$ Bus arbeitet in einem Vollduplexverfahren vgl. Abbildung ~\ref{duplex}. Die Teilnehmer teilen sich das Medium über Zeitschlitze. 
+
 \subsubsection{Adressierung \label{tei}}
 LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
@@ -307,7 +312,7 @@ Welche Daten übertragen werden, wird im Steuerfeld geregelt. Die reine Übertra
 Ein I-Block darf maximal 260 Byte groß sein. Daraus ergibt sich eine maximal Gesamtgröße von 268 Byte pro LAPD Frame, wenn I-Blöcke genutzt werden.
 
 \paragraph{Blockprüfung}
-Die Blockprüfung findet bei sowohl beim Sender, als auch beim Empfänger statt. Die \fcs wird vom Sender errechnet und in das entsprechende Feld geschrieben. Der Empfänger errechnet sie auch und vergleicht es mit der des Senders. Unterscheiden sich die Werte, kann von einem Fehler bei der Übertragung ausgegangen werden.  
+Die Blockprüfung findet bei sowohl beim Sender, als auch beim Empfänger statt. Die \fcs wird vom Sender errechnet und in das entsprechende Feld geschrieben. Der Empfänger errechnet sie auch und vergleicht es mit der des Senders. Unterscheiden sich die Werte, kann von einem Fehler bei der Übertragung ausgegangen werden. Die Größe der \fcs ist auf zwei Byte festgelegt.
  
 \paragraph{Blockbegrenzung}
 Siehe ~\ref{blockbegrenzung}.
@@ -315,13 +320,13 @@ Siehe ~\ref{blockbegrenzung}.
 \subsection{PPP}
 Router - Router und Host - Netzwork Verbindungen über synchrone und asynchrone Kreise. Enthält ein Protokoll Feld um das Network Layer Protokoll zu Identifizieren \cite[S. 102]{SWB-107223570}  
 
-Während in einzelnen Gebäuden meist LANS zum Einsatz kommen, werden für die weitreichende Verbindungen meist Punkt-zu-Punkt-Standleitungen eingesetzt. Diese Leitungen verbinden weit entfernte Router miteinander, hinter denen LANS mit mehren Hosts wie Personal-Computer, Workstation oder Server angeschlossen sein können. Die Verbindung in die Außenwelt von diesen LANS aus, wird eben genau über diese Router laufen. Und hier kommt das PPP (Point-to-Point Protocol) zum Einsatz.
+Während in einzelnen Gebäuden meist LAN zum Einsatz kommen, werden für die weitreichende Verbindungen meist Punkt-zu-Punkt-Standleitungen eingesetzt. Diese Leitungen verbinden weit entfernte Router miteinander. Hinter diesen können LAN mit mehren Hosts wie Personal-Computer, Workstation oder Server angeschlossen sein. Die Verbindung in die Außenwelt von diesen LAN aus, wird eben genau über diese Router laufen. Und hier kommt das PPP (Point-to-Point Protocol) zum Einsatz.
 
-PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFCs weiter ausgearbeitet wie in RFC 1662 und 1663.
+PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFC, wie in RFC 1662 und 1663, weiter ausgearbeitet.
 
-Das Protokoll unterstützt Fehlererkennung, dynamische IP-Adressen Vergebung bei Verbindungsaufbau, Berechtigungsprüfung und mehrere Protokolle.
+Das Protokoll unterstützt Fehlererkennung, dynamische IP-Adressen Vergabe bei Verbindungsaufbau, Berechtigungsprüfung und mehrere Protokolle.
 
-Das PPP umfasst desweiteren noch ein ganzes weiteres Protokoll das zum Aktivieren und Testen einer Leitung als auch zum Verhandeln von verschiedenen Parametern die für das PPP wichtig sind und zum Beenden nicht mehr gebrauchten Verbindungen verwendet wird. Die Aushandlung findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
+Das PPP umfasst des Weiteren noch ein ganzes weiteres Protokoll das zum Aktivieren und Testen einer Leitung als auch zum Verhandeln von verschiedenen Parametern die für das PPP wichtig sind und zum Beenden nicht mehr gebrauchten Verbindungen verwendet wird. Die Aushandlung findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
 
 Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer) das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese nennt man Network Control Protocol (NCP), so das auf jeder unterstützten Vermittlungsschicht ein anderes NCP laufen kann. 
 
@@ -399,7 +404,7 @@ Das Adressfeld steht immer auf einem festen Wert und zwar aus acht mal eins. Die
 
 \paragraph{Steuerung}
 
-Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnumerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche Übertragung zu realisieren. Die genauen Details sind in RFC 1663 definiert, die jedoch in der Praxis nicht häufig eingesetzt werden.
+Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnummerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche Übertragung zu realisieren. Die genauen Details sind in RFC 1663 definiert, die jedoch in der Praxis nicht häufig eingesetzt werden.
 
 
 \paragraph{Protokoll}
@@ -414,7 +419,7 @@ Wenn es nicht genug Daten geben sollte um ein Frame zu füllen kann über Paddin
 
 \paragraph{Prüfsumme}
 
-Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum überprüfen ob der Rahmen richtig gesendet worden ist.
+Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum überprüfen ob der Rahmen richtig gesendet worden ist. Die Prüfsumme wird anhand des CRC Algorithmus vom Sender und Empfänger berechnet. 
 
 
 \section{Vergleich der Protokolle}
@@ -436,9 +441,20 @@ Beim Ethernet werden gesendete Frames nicht quittiert.
 
 Beim LDAP müssen die empfangen Frames quittiert werden. Wird ein Frame nicht quittiert, kann das nächste nicht verschickt werden. Wie viele Frames vor dem Quittieren gesendet werden können, regelt die Fenstergröße.
 
+\subsection{Prüfsumme} 
+Alle 3 verglichenen Protokolle arbeiten mit dem CRC Algorithmus. Bei Ethernet und LAPD ist die Prüfsumme auf vier, bzw. zwei Byte festgelegt. Bei PPP ist sie variabel und wird von den Teilnehmern ausgehandelt. 
+
+\subsection{Sendemodus}
+Die Übertragung des Ethernet ist sowohl im Halb- als auch im Vollduplex-Modus möglich. 
+
+LAPD überträgt, bedingt durch den $S_0$ Bus im Vollduplex-Modus.
+
+\subsection{Exklusivität auf dem Medium}
+Sowohl Ethernet als auch LAPD nutzen ihr Medium als Shared Medium.
+
 \subsection{Zusammenfassung}
 
-\begin{tabular}{| m{\dimexpr.2\textwidth} || m{\dimexpr.2\textwidth} | m{\dimexpr.2\textwidth} | m{\dimexpr.2\textwidth} |}
+\begin{tabular}{| m{\dimexpr.2\linewidth} || m{\dimexpr.2\linewidth} | m{\dimexpr.2\linewidth} | m{\dimexpr.2\linewidth} |}
 \hline
 \textbf{Vergleich} & \textbf{Ethernet} & \textbf{LAPD} & \textbf{PPP} \\ \hline \hline
 
@@ -446,7 +462,13 @@ Beim LDAP müssen die empfangen Frames quittiert werden. Wird ein Frame nicht qu
 
 \textbf{Sende-quittierung} & nein & ja & \\ \hline
 
+\textbf{Prüfsumme} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
+
 \textbf{Frametypen} & 1 & 4 &  \\ \hline
+
+\textbf{Exklusivität} & Shared & Shared & \\ \hline
+
+\textbf{Sendemodus} & Halb- und Vollduplex & Vollduplex & \\ \hline
 \end{tabular}
 
 
