@@ -328,7 +328,7 @@ Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer) das für auf
 Beispiele für NCP sind IPCP, AppleTalk Control Protokoll oder IPXCP. Das IPCP steht für IP Control Protocol und wird zur unter anderem zur IP-Vergabe genutzt.
 
 
-\subsection{LCP Verhandlung}
+\subsubsection{LCP Verhandlung}
 
 
 Das Verbindungssteuerungs-Protokoll (Link-Control Protolcol - LCP) des PPP stellt eine Methode für die Etablierung, Konfigurierung, Verwaltung und Beendigung einer Punkt-zu-Punkt-Verbindung zur Verfügung. LCP durchläuft vier einzelne Phasen:
@@ -360,7 +360,7 @@ Im folgenden die einzelnen Typen und ihre Bedeutung:
 
 
 
-\subsection{Verbindungsablauf des PPP}
+\subsubsection{Verbindungsablauf des PPP}
 
 Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Zeichnung.
 Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
@@ -387,32 +387,32 @@ Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Ste
 	\label{ppp_frame}
 \end{figure}
 
-\subsubsection{Flag}
+\paragraph{Flag}
 
 Das Flag besteht am Anfang wie am Ende aus einem Byte (011111110) dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen das der Frame zu Ende ist.
 
 
-\subsubsection{Adress}
+\paragraph{Adress}
 
 Das Adressfeld steht immer auf einem festen Wert und zwar aus acht mal eins. Dies dient dazu das alle Stationen den Rahmen akzeptieren und zum vermeiden das Verbindungsadressen zugewiesen werden müssen. Da dieses Feld in der Standartkonfiguration immer gleich ist, gibt es wie auch bei dem Steuerungsfeld einen die Möglichkeit zwischen zwei Parteien diese Felder einfach entfallen zu lassen und damit zwei Byte pro Rahmen einzusparen.
 
 
-\subsubsection{Steuerung}
+\paragraph{Steuerung}
 
 Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnumerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche Übertragung zu realisieren. Die genauen Details sind in RFC 1663 definiert, die jedoch in der Praxis nicht häufig eingesetzt werden.
 
 
-\subsubsection{Protokoll}
+\paragraph{Protokoll}
 
 Das vierte Feld, Protokoll, gibt an welche Art von Paket in den Nutzdaten übertragen wird. Dies können beispielsweise LCP, NCP, IP, IPX und andere Protokolle sein. Normalerweise ist die Größe des Feldes auf zwei Byte festgelegt, es ist jedoch möglich über das LCP auf ein Byte runter zu handeln.
 
 
-\subsubsection{Nutzdaten}
+\paragraph{Nutzdaten}
 
 Die große des Feldes Nutzdaten wird üblicherweise von den Parteien ausgehandelt und festgelegt. Findet dieser Prozess über das LCP nicht statt so ist das Feld standardmäßig auf 1.500 Byte festgelegt.
 Wenn es nicht genug Daten geben sollte um ein Frame zu füllen kann über Padding dieses auch bei Bedarf aufgefüllt werden.
 
-\subsubsection{Prüfsumme}
+\paragraph{Prüfsumme}
 
 Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum überprüfen ob der Rahmen richtig gesendet worden ist.
 
