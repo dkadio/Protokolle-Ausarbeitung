@@ -275,7 +275,7 @@ LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche 
 \end{figure}
 
 \paragraph{Blockbegrenzung \label{blockbegrenzung}}
-Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. \textcolor{red}{\textbf{Sollen wir das noch genauer ausführen?}}  S.448 Technik der Netze.  
+Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. Sie hat den Wert 01111110.
 
 \paragraph{Adressfeld}
 Das Adressfeld besteht aus 2 Bytes. Es enthält den SAPI und den TEI, die je 1 Byte groß sind. Die Größe 1 Byte ist eigentlich ungenau, da man die Bytes wieder genauer aufteilen kann. Jedes dieses Bytes hat ein EA (Extended Adress), damit wird angegeben, ob dem Byte noch weitere folgen. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2. Er besteht aus 6 Bit, zusätzlich sind in dem Byte das C/R Bit und das EA Bit. Das C/R-Feld kennzeichnet, ob das Paket eine Anweisung (Command) für den Empfänger enthält oder ob es eine Antwort (Response) auf eine zuvor erhaltene Anweisung enthält. 
@@ -429,7 +429,7 @@ Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen ab
 	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames\cite{*}}
 \end{figure}
 \paragraph{Code}
-Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle die hier stehen können können aus der Aufzählung aus dem Kapitel "LCP Verhandlung" entnommen werden.
+Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle die hier stehen können aus der Aufzählung aus dem Kapitel LCP Verhandlung entnommen werden.
 
 \paragraph{Indentifier}
 Der Identifizier wird benutzt um zwischen Anfrage und Antwort zu unterscheiden
@@ -437,7 +437,7 @@ Der Identifizier wird benutzt um zwischen Anfrage und Antwort zu unterscheiden
 \paragraph{Length}
 Das Lenght Feld wird benutzt um die Größe des gesamten Frames zu übersenden. Das heisst inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen worden sind.
 \paragraph{Data/Options}
-Hier werden die zu Übertragenden Daten gesendet. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Hier wird die Option an sich genannt die Länge der Daten die übertragen werden und die eigentlichen Daten, die die Option genau beschreiben. Ein Beispiel hierfür wäre die Option "Authentication" und als Daten das gewählte Authentication-Protocol.
+Hier werden die zu Übertragenden Daten gesendet. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Hier wird die Option an sich genannt die Länge der Daten die übertragen werden und die eigentlichen Daten, die die Option genau beschreiben. Ein Beispiel hierfür wäre die Option Authentication und als Daten das gewählte Authentication-Protocol.
 
 \section{Vergleich der Protokolle}
 \subsection{Frames}
@@ -482,11 +482,22 @@ Da PPP Vollduplex voraussetzt hat dies keine Bedeutung.
 \hline
 \textbf{Vergleich} & \textbf{Ethernet} & \textbf{LAPD} & \textbf{PPP} \\ \hline \hline
 
-\textbf{Framegröße} & 64 -- 1518 Byte & trölf & 7-9 Byte + var Data \\ \hline
+\textbf{Framegröße} & 26 Byte + Data & 7-8 Byte + Data & 7-9 Byte + Data \\ \hline
+
+\textbf{Data Größe} & 46-1500 Byte & -260 Byte & -1500 Byte\\ \hline
+
+\textbf{Preambel} & ja & ja & ja\\ \hline
+
+\textbf{Präambel Größe} & 8 Byte  & 1 Byte & 1 Byte\\ \hline
+
+\textbf{Präambel Wert} & 0101...011  & 01111110 & 01111110\\ \hline
+
+\textbf{Präambel Abschluss} & Nein & Ja & Ja\\ \hline
 
 \textbf{Sende-quittierung} & nein & ja & nein\\ \hline
+\textbf{Prüfsumme} & ja & ja & ja\\ \hline
 
-\textbf{Prüfsumme} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
+\textbf{Prüfsumme Größe} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
 
 \textbf{Frametypen} & 1 & 4 &  1\\ \hline
 
