@@ -275,7 +275,7 @@ LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche 
 \end{figure}
 
 \paragraph{Blockbegrenzung \label{blockbegrenzung}}
-Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. \textcolor{red}{\textbf{Sollen wir das noch genauer ausführen?}}  S.448 Technik der Netze.  
+Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. Sie hat den Wert 01111110.
 
 \paragraph{Adressfeld}
 Das Adressfeld besteht aus 2 Bytes. Es enthält den SAPI und den TEI, die je 1 Byte groß sind. Die Größe 1 Byte ist eigentlich ungenau, da man die Bytes wieder genauer aufteilen kann. Jedes dieses Bytes hat ein EA (Extended Adress), damit wird angegeben, ob dem Byte noch weitere folgen. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2. Er besteht aus 6 Bit, zusätzlich sind in dem Byte das C/R Bit und das EA Bit. Das C/R-Feld kennzeichnet, ob das Paket eine Anweisung (Command) für den Empfänger enthält oder ob es eine Antwort (Response) auf eine zuvor erhaltene Anweisung enthält. 
@@ -336,15 +336,15 @@ Beispiele für NCP sind IPCP für IP, AppleTalk Control Protokoll für Appletalk
 Wenn Beispielsweise IP über PPP übertragen wird dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Clienten eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
 
 
-\subsubsection{LCP Verhandlung}
+\subsubsection{LCP}
 
+Das Link Control Protocol stellt Methoden zum steuern der Verbindung in Hinsicht auf Etablierung, Konfiguration und Verwaltung sowie auf das Beenden einer Punkt zu Punkt-Verbindung zur Verfügung. LCP selbst durchläuft vier einzelne Phasen. In der ersten Phase wird eine Verbindung aufgebaut und die Konfiguration wird ausgehandelt. Noch bevor Segmente oder Datagramme der Vermittlungsschicht ausgetauscht werden können, muss LCP die erste Phase abschließen. Die Erste Phase ist dann beendet wenn LCP die ausgehandelten Parameter Bestätigt. Dies ist dann der Fall wenn ein Bestätigungsframe einmal gesendet sowie empfangen wurde. Danach wird die Qualität der Verbindung ermittelt, was aber Optional ist. In dieser Phase wird ermittelt ob die Qualität der Verbindung für die Vermittlungschicht ausreicht. LCP kann die Verbindung der Vermittlungsschicht solange herauszögen bis diese Phase abgeschlossen ist. 
+Nachdem LCP die Qualität geprüft hat wird die Vermittlungsschicht von den NCP konfiguriert und kann gestartet so wie beendet werden. 
+Wenn die Verbindung von LCP beendet wird gibt es den hören Protokollen bescheid so das diese entsprechend reagieren können. 
+Dies kann jederzeit durch den Benutzer aber auch durch Physische Ereignisse passieren.
 
-Das Verbindungssteuerungs-Protokoll (Link-Control Protolcol - LCP) des PPP stellt eine Methode für die Etablierung, Konfigurierung, Verwaltung und Beendigung einer Punkt-zu-Punkt-Verbindung zur Verfügung. LCP durchläuft vier einzelne Phasen:
-In der ersten Phase erfolgt der Verbindungsaufbau, und die Konfiguration wird ausgehandelt. Bevor irgendwelche Datagramme der Vermittlungsschicht (z.B. IP) ausgetauscht werden können, muß LCP die Verbindung geöffnet und Konfigurationsparameter ausgehandelt haben. Diese Phase ist beendet, wenn sowohl ein Frame gesendet als auch einer empfangen wurde, der die Konfigurationsbestätigung enthält.
-Dann wird die Verbindungsqualität ermittelt. Diese Phase ist optional. In dieser Phase wird die Verbindung getestet, um festzustellen, ob die Qualität dafür ausreicht, daß die Protokolle der Vermittlungsschicht gestartet werden können. LCP kann die Übertragung von Protokoll-Informationen der Vermittlungsschicht so lange hinauszögern. bis diese Phase beendet ist.
-Zu diesem Zeitpunkt erfolgt die Konfigurationaushandlung des Vermittlungsschicht-Protokolls. Nachdem LCP die Phase der Qualitätsprüfung beendet hat, können die Vermittlungsschicht-Protokolle vom entsprechenden NCP einzeln konfiguriert werden und jederzeit gestartet oder beendet werden. Wenn LCP die Verbindung beendet, informiert es die Protokolle der Vermittlungsschicht, damit diese entsprechende Schritte einleiten.
-Zuletzt erfolgt die Verbindungsbeendigung. LCP kann die Verbindung jederzeit beenden. Eine Verbindung wird im allgemeinen auf Anforderungen eines Benutzers beendet, kann aber auch aufgrund eines physischen Ereignisses beendet werden, z.B. wenn das Trägersignal verloren geht oder ein Timer abläuft.
-Es gibt drei Klassen von LCP-Frames. Verbindungsaufbau-Frames dienen dazu, eine Verbindung aufzubauen und zu konfigurieren. Verbindungsbeendigungs-Frames dienen dazu, eine Verbindung zu beenden, während Verbindungsverwaltungs-Frames eine Verbindung verwalten und debuggen.
+LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
+
 
 Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese verhalten festhalten. 
 Im folgenden die einzelnen Typen und ihre Bedeutung:
@@ -429,7 +429,7 @@ Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen ab
 	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames\cite{*}}
 \end{figure}
 \paragraph{Code}
-Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle die hier stehen können können aus der Aufzählung aus dem Kapitel "LCP Verhandlung" entnommen werden.
+Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle die hier stehen können aus der Aufzählung aus dem Kapitel LCP Verhandlung entnommen werden.
 
 \paragraph{Indentifier}
 Der Identifizier wird benutzt um zwischen Anfrage und Antwort zu unterscheiden
@@ -437,7 +437,7 @@ Der Identifizier wird benutzt um zwischen Anfrage und Antwort zu unterscheiden
 \paragraph{Length}
 Das Lenght Feld wird benutzt um die Größe des gesamten Frames zu übersenden. Das heisst inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen worden sind.
 \paragraph{Data/Options}
-Hier werden die zu Übertragenden Daten gesendet. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Hier wird die Option an sich genannt die Länge der Daten die übertragen werden und die eigentlichen Daten, die die Option genau beschreiben. Ein Beispiel hierfür wäre die Option "Authentication" und als Daten das gewählte Authentication-Protocol.
+Hier werden die zu Übertragenden Daten gesendet. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Hier wird die Option an sich genannt die Länge der Daten die übertragen werden und die eigentlichen Daten, die die Option genau beschreiben. Ein Beispiel hierfür wäre die Option Authentication und als Daten das gewählte Authentication-Protocol.
 
 \section{Vergleich der Protokolle}
 \subsection{Frames}
@@ -482,11 +482,22 @@ Da PPP Vollduplex voraussetzt hat dies keine Bedeutung.
 \hline
 \textbf{Vergleich} & \textbf{Ethernet} & \textbf{LAPD} & \textbf{PPP} \\ \hline \hline
 
-\textbf{Framegröße} & 64 -- 1518 Byte & trölf & 7-9 Byte + var Data \\ \hline
+\textbf{Framegröße} & 26 Byte + Data & 7-8 Byte + Data & 7-9 Byte + Data \\ \hline
+
+\textbf{Data Größe} & 46-1500 Byte & Variabel & Variabel \\ \hline
+
+\textbf{Preambel} & ja & ja & ja\\ \hline
+
+\textbf{Präambel Größe} & 8 Byte  & 1 Byte & 1 Byte\\ \hline
+
+\textbf{Präambel Wert} & 0101...011  & 01111110 & 01111110\\ \hline
+
+\textbf{Präambel Abschluss} & Nein & Ja & Ja\\ \hline
 
 \textbf{Sende-quittierung} & nein & ja & nein\\ \hline
+\textbf{Prüfsumme} & ja & ja & ja\\ \hline
 
-\textbf{Prüfsumme} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
+\textbf{Prüfsumme Größe} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
 
 \textbf{Frametypen} & 1 & 4 &  1\\ \hline
 
