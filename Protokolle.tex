@@ -110,33 +110,34 @@ Im Folgenden sollen verschiedene Layer 2 Protokolle für kabelgebundene Netze mi
 \caption{Das \osi im Überblick \cite{osi_modell}}
 \label{osi_modell}
 \end{figure} 
-Diese Grafik stellt die Schichten des \osi da. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte ermöglicht. Es beschreibt ein komplettes Telekommunikationsnetzwerk. Die einzelnen Funktionen sind in 7 Schichten aufgeteilt. 
+Diese Grafik stellt die Schichten des \osi dar. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte beschreibt. Es beschreibt ein komplettes Telekommunikationsnetzwerk. Die einzelnen Funktionen sind in 7 Schichten aufgeteilt. 
 
 Das \osi standardisiert die Netzwerk Architektur. Dadurch können Hersteller Lösungen anbieten, die auf der ganzen Welt genutzt werden können. Eine proprietäre Lösung hätte zu Insellösungen geführt. Ein weiterer Vorteil ist, dass die einzelnen Schichten, oder Layer, über Schnittstellen miteinander kommunizieren. Das ermöglicht ein Austauschen einzelner Komponenten, ohne die gesamte Architektur ändern zu müssen.
 
 Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten konkret implementiert werden. Diese Implementierungen sind eigene Protokolle. 
 
 \subsection{Der Layer 2}
-Der Layer 2, Data Link Layer, setzt auf dem Physical Layer auf und stellt dem Network Layer seine Dienste zur Verfügung. Der Physical Layer beschriebt das Medium über das die Signale übertragen werden. Hier findet noch keine Logik statt. 
+Der Layer 2, Data Link Layer, setzt auf dem Physical Layer auf und stellt dem Network Layer seine Dienste zur Verfügung. Der Physical Layer beschreibt, wie der Name schon sagt, die physikalischen Eigenschaften der Verbindung.  Hier findet noch keine Logik statt. Als höhere Schicht nutzt der Data Link Layer die Eigenschaften des Physical Layer, bzw. nutzt ihn, um die Informationen auf das Medium zu bringen.
 
 Die Aufgaben des Layer 2 im Überblick:
 \begin{itemize}
-	\item Aufteilung in Pakete
+	\item Aufteilung in Frames
 	\item Fehlerkontrolle
 \end{itemize} 
 
 \subsubsection{Aufteilung in Frames}
-Die Datenblöcke werden im Layer 2 in Frames aufgeteilt. Die Vorteile des Framing sind die schnellere Nutzung eines shared Mediums und dass fehlerhafte Daten nicht komplett übertragen werden müssen.
+Die Datenblöcke werden im Layer 2 in Frames aufgeteilt. Die Vorteile des Framing sind die schnellere Nutzung eines shared Mediums und dass bei fehlerhaften Daten nur die fehlerhaften Frames neu übertragen werden müssen. Die schnelle Nutzung eines Shared Mediums resultiert daraus, dass ein Sender, der einen großen Datensatz überträgt, nicht dauerhaft das Medium belegt. Sendet der Teilnehmer A ein Gigabyte und der Teilnehmer B nur ein Byte, kann der Teilnehmer B seine Frames zwischen denen von Teilnehmer A unterbringen und seine Übertragung abschließen, bevor Teilnehmer B fertig ist.
+ 
 \subsubsection{Fehlerkontrolle}
-Der Data Link Layer führt eine Fehlerkontrolle durch. Dazu zählen eine Suche nach Duplikaten, nach inkorrekt oder unvollständig gesendeten Paketen. Wenn ein Fehler entdeckt wird, wird eine neue Übertragung der Frames angefordert \cite[S. 91]{SWB-107223570}. Die Fehlerkontrolle wird über den \glqq Cyclic Redundancy Check\grqq ~CRC durchgeführt. Dieses Verfahren ist eine Möglichkeit zur Prüfsummenberechnung, die beim Sender und der Senke durchgeführt wird. Sind beide Prüfsummen gleich, kann angenommen werden, dass das Frame korrekt übertragen wurde. 
+Der Data Link Layer führt eine Fehlerkontrolle durch. Dazu zählen eine Suche nach Duplikaten und eine Suche nach inkorrekt oder unvollständig gesendeten Paketen. Wenn ein Fehler entdeckt wird, wird eine neue Übertragung der Frames angefordert \cite[S. 91]{SWB-107223570}. Die Fehlerkontrolle wird über den \glqq Cyclic Redundancy Check\grqq ~CRC durchgeführt. Dieses Verfahren ist eine Methode zur Prüf\-summen\-be\-rech\-nung, die beim Sender und bei der Senke durchgeführt wird. Sind beide Prüfsummen gleich, kann angenommen werden, dass das Frame korrekt übertragen wurde. Damit die Senke die Prüfsummen vergleichen kann wird die des Senders mitgeschickt.
 
-Die Frames werden mit Sequence Numbers durchnummeriert. Der Empfänger prüft, ob die Frames in der richtigen Reihenfolge ankommen. Bei einer \glqq out-of-sequence transmission\grqq ~kann von einem verlorenen Frame ausgegangen werden, das entsprechende Frame wird neu angefordert, bzw. Layer 3 wird benachrichtigt.
+Die Frames werden mit Sequence Numbers durchnummeriert. Der Empfänger prüft, ob die Frames in der richtigen Reihenfolge ankommen. Bei einer \glqq out-of-sequence transmission\grqq ~kann von einem verlorenen Frame ausgegangen werden, das entsprechende Frame wird neu angefordert, bzw. der Layer 3 wird benachrichtigt.
 \section{Die Layer 2 Protokolle im Überblick}
 
 \subsection{Ethernet}
-Ethernet ist ein weit verbreitetes Layer 2 Protokoll. 90\% aller lokal installierten Netzwerke sind mit Ethernet realisiert\cite{SWB-097965316}. Ethernet wurde ursprünglich für die Anbindung eines Druckers bei der Firma Xerox Corporation entwickelt. Die damalige Übertragungsgeschwindigkeit von 2,94 Mbit/s wurde auf aktuell 100 Gbit/s gesteigert, weitere Steigerungen sind zu erwarten.
+Ethernet ist ein weit verbreitetes Layer 2 Protokoll. 90\% aller lokal installierten Netzwerke sind mit Ethernet realisiert\cite{SWB-097965316}. Ethernet wurde ursprünglich für die Anbindung eines Druckers bei der Firma Xerox Corporation entwickelt. Die damalige Über\-tragungs\-geschwindig\-keit von 2,94 Mbit/s wurde auf aktuell 100 Gbit/s gesteigert, weitere Steigerungen sind zu erwarten.
 
-Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportiert. Kollisionen werden durch \glqq CSMA/CD\grqq ~entdeckt, bzw. aufgelöst. Die Übertragung läuft gleichberechtigt und verbindungslos. Die Daten werden an alle Teilnehmer weitergeleitet, diese vergleichen die Empfängeradresse mit ihrer eigenen und verwerfen die Frames, die nicht an sie adressiert sind. Diese Aussage kann eingeschränkt werden, da Switche die Daten nur an Ports leiten, an denen die entsprechenden Senken angeschlossen sind. 
+Die Daten werden bei Ethernet über einen eigenen Übertragungskanal transportiert (vgl.~\ref{zugriffEthernet}). Kollisionen werden durch \glqq CSMA/CD\grqq ~entdeckt, bzw. aufgelöst. Die Über\-trag\-ung läuft gleichberechtigt und verbindungslos. Die Daten werden an alle Teilnehmer weitergeleitet, diese vergleichen die Empfängeradresse mit ihrer eigenen und verwerfen die Frames, die nicht an sie adressiert sind. Diese Aussage kann eingeschränkt werden, da Switche die Daten nur an Ports leiten, an denen die entsprechenden Senken angeschlossen sind. 
 
 \subsubsection{Gebräuchliche Übertragungsmedien des Ethernet}
 \begin{figure}[H]
@@ -162,19 +163,19 @@ Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportier
 \end{minipage}
 \end{figure}
  
-Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
+Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxialkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
 
 \subsubsection{Adressierung \label{ethernet_adresse}}
  Ethernet nutzt zur Adressierung von Teilnehmern deren MAC-Adresse. MAC-Adressen, Media Access Control Adress, sind Hardwareadressen und werden weltweit eindeutig vergeben. Sie bestehen aus 6 Byte und sind nach folgendem Muster aufgebaut: 
  
- Hersteller--Hersteller--Hersteller--xx--xx--xx 
+\framebox{ Hersteller--Hersteller--Hersteller--xx--xx--xx }
 
-Der Herstellerteil, auch Organizationally  Unique Identifier (OUI), wird von der IEEE vergeben. Jeder Hersteller hat seinen eigenen Bereich, der durch die ersten 3 Bytes bestimmt wird. Die letzten 3 Bytes werden vom Hersteller selber vergeben. Dabei ist der Hersteller für die eindeutige Vergabe der letzten 3 Bytes verantwortlich. Einige Hersteller haben mittlerweile mehrere eigene Bereiche.
+Der Herstellerteil, auch Organizationally  Unique Identifier (OUI), wird von der IEEE vergeben. Jeder Hersteller hat seinen eigenen Bereich, der durch die ersten 3 Byte bestimmt wird. Die letzten drei Byte werden vom Hersteller selber vergeben. Dabei ist der Hersteller für die eindeutige Vergabe der letzten drei Byte verantwortlich. Einige Hersteller haben mittlerweile mehrere eigene Bereiche.
 
-\subsubsection{Zugriff auf das Medium}
-Historisch gesehen nutzt Ethernet das Übertragungsmedium als Shared Medium. Die einzelnen Teilnehmer wurden am selben Koaxialkabel über T-Stücke angeschlossen. Um Kollisionen zu vermeiden, wurde ein geeignetes Verfahren zur Vermeidung benötigt. Von einer Kollision spricht man, wenn mehrere Teilnehmer gleichzeitig auf das Medium zugreifen würden, also Signale aussenden. Die Signale würden sich gegenseitig überlagern und wären nicht mehr nutzbar. Bei Ethernet wird CSMA/CD eingesetzt. Bei diesem Verfahren wird vor dem Senden geprüft, ob die Leitung frei ist. Erst wenn die Leitung frei ist wird gesendet (Carrier Sense). Wenn zufällig mehrere Teilnehmer gleichzeitig ein Signal aussenden (Multiple Access) kommt es dennoch zu Kollisionen. Der/Die Sender prüfen während dem Senden, ob es zu Kollisionen kommt (Collision Detect) und brechen ihre Übertragung im Fall einer Kollision ab. Nach einem Abbruch wird eine zufällige Zeit gewartet bis erneut gesendet wird. Der Grund, warum es trotz diesem Verfahren zu Kollisionen kommen kann, ist die Signallaufzeit. Die Signale brauchen eine gewisse Zeit um über die Leitungen übertragen zu werden. 
+\subsubsection{Zugriff auf das Medium \label{zugriffEthernet}}
+Historisch gesehen nutzt Ethernet das Übertragungsmedium als Shared Medium. Die einzelnen Teilnehmer wurden am selben Koaxialkabel über T-Stücke angeschlossen. Um Kollisionen zu vermeiden, wurde ein geeignetes Verfahren zur Vermeidung benötigt. Von einer Kollision spricht man, wenn mehrere Teilnehmer gleichzeitig auf das Medium zugreifen, also Signale aussenden. Die Signale  überlagern sich gegenseitig und sind nicht mehr nutzbar. Bei Ethernet wird CSMA/CD eingesetzt. Bei diesem Verfahren wird vor dem Senden geprüft, ob die Leitung frei ist. Erst wenn die Leitung frei ist wird gesendet (Carrier Sense). Wenn zufällig mehrere Teilnehmer gleichzeitig ein Signal aussenden (Multiple Access) kommt es dennoch zu Kollisionen. Der/Die Sender prüfen während dem Senden, ob es zu Kollisionen kommt (Collision Detect) und brechen ihre Übertragung im Fall einer Kollision ab. Nach einem Abbruch wird eine zufällige Zeit gewartet bis erneut gesendet wird. Der Grund, warum es trotz diesem Verfahren zu Kollisionen kommen kann, ist die Signallaufzeit. Die Signale brauchen eine gewisse Zeit um über die Leitungen übertragen zu werden. 
 
-In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet, dass ein Übertragungskanal zum Senden und zum Empfangen genutzt wird. Dadurch halbiert sich natürlich im schlimmsten Fall die Datenrate. Mit der Einführung von Twisted Pair Kabeln und Lichwellenleitern wurde Ethernet auf den Vollduplex Betrieb umgestellt. Dadurch konnte die Übertragungsrate gesteigert werden und Kollisionen wurden unwahrscheinlicher.
+In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet, dass ein Übertragungskanal zum Senden und zum Empfangen genutzt wird. Dadurch halbiert sich natürlich rechnerisch die Datenrate, bzw. kann durch häufige Kollisionen und den damit verbundenen Wartezeiten noch weiter absinken. Mit der Einführung von Twisted Pair Kabeln und Lichwellenleitern wurde der Vollduplex Betrieb ermöglicht. Dadurch konnte die Übertragungsrate gesteigert werden und Kollisionen wurden vermieden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\linewidth]{Grafiken/duplex.jpg}
@@ -183,7 +184,7 @@ In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet
 \end{figure}
  
  \subsubsection{Frames}
-Um Daten über Ethernet übertragen zu können werden sie in Frames aufgeteilt. Der Vorteil daran ist, dass ein Sender bei großen Übertragungen nicht das gesamte Netzwerk belegt und dass bei einer fehlerhaften Übertragung nur einzelne Frames neu versandt werden müssen. Der Ausdruck Frame kann wörtlich genommen werden. Die Nutzdaten werden in einen Rahmen (Frame) eingepackt.
+Um Daten über Ethernet übertragen zu können, werden sie in Frames aufgeteilt. Der Vorteil daran ist, dass ein Sender bei großen Übertragungen nicht das gesamte Netzwerk belegt und dass bei einer fehlerhaften Übertragung nur einzelne Frames neu versandt werden müssen. Der Ausdruck Frame kann wörtlich genommen werden. Die Nutzdaten werden in einen Rahmen (Frame) eingepackt.
 
 Ein Frame ist folgendermaßen aufgebaut:
 \begin{itemize}
@@ -201,22 +202,22 @@ Ein Frame ist folgendermaßen aufgebaut:
 \end{figure}
 
 \paragraph{Präambel}
-Die Präambel enthält eine Bitfolge, die dem Empfänger signalisiert, dass ein Rahmen ankommt. Die Präambel besteht aus 8 Bytes mit einer alternierenden Folge aus 0 und 1. Die letzten 2 Bits im letzten Byte sind immer 1. Hier besteht ein kleiner Unterschied zwischen DIX und IEEE. Obwohl die Bitfolgen die gleichen sind, ist die Präambel im IEEE Standard formell in die 7 Byte lange Präambel und den 1 Byte langen Start-of-Frame-Delimiter aufgeteilt.
-Sie dient u.a. zur Synchronisation der Empfängerstationen. 
+Die Präambel enthält eine Bitfolge, die dem Empfänger signalisiert, dass ein Rahmen ankommt. Die Präambel besteht aus 8 Byte mit einer alternierenden Folge aus 0 und 1. Die letzten 2 Bits im letzten Byte sind immer 1. Hier besteht ein kleiner Unterschied zwischen DIX und IEEE. Obwohl die Bitfolgen die gleichen sind, ist die Präambel im IEEE Standard formell in die 7 Byte lange Präambel und den 1 Byte langen Start-of-Frame-Delimiter aufgeteilt.
+Die Präambel dient u.a. zur Synchronisation der Empfängerstationen. 
 
 \paragraph{ Die Hardware Quell- und Zieladresse}
-Die Adressen sind MAC Adressen. Ihr Aufbau ist bereits in \ref{ethernet_adresse} beschrieben worden. Ein Ethernet Frame hat sowohl die Ziel- als auch die Senderadresse.
+Die Adressen sind MAC Adressen. Ihr Aufbau ist bereits in \ref{ethernet_adresse} beschrieben worden. Ein Ethernet Frame enthält sowohl die Ziel-, als auch die Quelladresse.
 
 \paragraph{Typ- oder Längenfeld}
-Um zu verstehen, warum beide Bezeichnungen möglich sind muss man wieder die Historie betrachten. Die DIC Gruppe nutzte das Feld als Typfeld. Dort wurde definiert, welche Daten des höheren Layers übertragen werden.  Im Standard IEEE 802.3 wird das Feld als Längenfeld genutzt. Um welches Feld es sich dabei genau handelt, kann anhand der Größe festgestellt werden. Die Typenbezeichnungen beginnen ab 1635 (0x0600). Ein Wert darunter kann nur eine Längenangabe sein. Jumbo- und Super Jumboframes sind abseits von IEEE 802.3 definiert.
+Um zu verstehen, warum beide Bezeichnungen möglich sind, muss man wieder die Historie betrachten. Die DIC Gruppe nutzte das Feld als Typfeld. Dort wurde definiert, welche Daten des höheren Layers übertragen werden.  Im Standard IEEE 802.3 wird das Feld als Längenfeld genutzt.Um welchen Standart, bzw. um welches Feld es sich handelt, kann anhand des Wertes ermittelt werden. Die Typenbezeichnungen beginnen ab 1635 (0x0600). Ein Wert darunter kann nur eine Längenangabe sein. Jumbo- und Super Jumboframes sind abseits von IEEE 802.3 definiert.
 
 \paragraph{Nutzdaten}
-Die Nutzdaten sind die Daten, die eigentlich übertragen werden sollen. Das Feld mit den Nutzdaten hat eine Mindestlänge von 46 Byte  und eine Maximallänge von 1500 Byte. Die Mindestlänge kommt von der Anforderung des CSMA/CD, wonach ein Frame mindestens 64 Byte haben muss. Zieht man von den 64 Byte die Headerlänge (14 Byte) und die Checksumme (4 Byte) ab kommt man auf 46 Byte. Wird die Mindestlänge der Nutzdaten unterschritten, wird das Feld mit sogenannten Pads aufgefüllt. Sie haben den Wert 00.
+Die Nutzdaten sind die Daten, die eigentlich übertragen werden sollen. Das Feld mit den Nutzdaten hat eine Mindestlänge von 46 Byte  und eine Maximallänge von 1500 Byte. Die Mindestlänge kommt von der Anforderung des \mbox{CSMA/CD}, wonach ein Frame mindestens 64 Byte haben muss. Zieht man von den 64 Byte die Headerlänge (14 Byte) und die Checksumme (4 Byte) ab kommt man auf 46 Byte. Wird die Mindestlänge der Nutzdaten unterschritten, wird das Feld mit sogenannten Pads aufgefüllt. Sie haben den Wert 00.
 \paragraph{Checksumme \label{checksumme}}
-Die letzten 4 Bytes eines Ethernet Frames sind das \fcs oder Frame Checking Field. Das FCS dient der Sicherstellung, dass der Frame korrekt übertragen wurde. Der Inhalt dieses Feldes wird mit durch CRC-Algorithmus errechnet. Sowohl Sender als auch Empfänger wenden ihn an, kommen bei der Berechnung unterschiedliche Werte heraus, kann davon ausgegangen werden, dass auf Layer 1 Bits verfälscht wurden. Neben dem CRC Verfahren werden zur Prüfung auch andere Kriterien zur Prüfung eines Frames angewandt:
+Die letzten 4 Byte eines Ethernet Frames sind die \fcs oder Frame Checking Field. Die FCS dient der Sicherstellung, dass der Frame korrekt übertragen wurde. Der Inhalt dieses Feldes wird mithilfe des CRC-Algorithmus errechnet. Sowohl Sender, als auch Empfänger, wenden ihn an. Werden beim Sender und Empfänger unterschiedliche Werte errechnet, kann davon ausgegangen werden, dass auf Layer 1 Bits verfälscht wurden. Neben dem CRC Verfahren werden zur Prüfung auch andere Kriterien zur Prüfung eines Frames angewandt:
 \begin{itemize}
 	\item Die Framelänge stimmt nicht mit dem Längenfeld überein (nur bei IEEE 802.3)
-	\item Die Framelänge ist kein ganzzahliges Vielfache eines Bytes
+	\item Die Framelänge ist kein ganzzahliges Vielfaches eines Byte
 \end{itemize}
 
 
@@ -224,7 +225,11 @@ Die letzten 4 Bytes eines Ethernet Frames sind das \fcs oder Frame Checking Fiel
 Ethernet ist keiner bestimmten Netzwerk Topologie zuzuordnen. Heute gebräuchlich ist eine Sterntopologie, andere Formen sind aber auch möglich.   
 
 \subsection{LAPD}
-LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 2. Es wird genutzt um Layer 3 Informationen zwischen den Teilnehmer des ISDN Netzwerks zu übertragen. Für diese Übertragung wird der D-Kanal genutzt.
+LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 2. Es wird genutzt, um Layer 3 Informationen zwischen den Teilnehmern des ISDN Netzwerks zu übertragen. Für diese Übertragung wird der D-Kanal genutzt.
+
+
+\subsubsection{Der D-Kanal}
+Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen werden, kommunizieren über den D-Kanal nur Prozessoren.
 
 \subsubsection{Gebräuchliche Medien des LAPD}
 Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. Für  $S_0$ werden üblicherweise 4 Draht Kupfer Verkabelungen verwendet, für $U_{K0}$ eine Kupfer Doppelader.
@@ -243,20 +248,17 @@ Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. F�
 \end{minipage}
 \end{figure}
 
-
-\subsubsection{Der D-Kanal}
-Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
+\subsubsection{Adressierung \label{tei}}
+LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät, oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
 \subsubsection{Der Zugriff auf das Medium}
-LAPD ist das Signalisierungsprotokoll des ISDN. An einem $S_0$ Bus teilen sich bis zu 8 Teilnehmer einen D-Kanal. Der Zugriff durch die Teilnehmer ist priorisiert. Zur Regelung, welcher Teilnehmer bevorrechtigt ist, gilt, je mehr logische Einsen den Teilnehmer identifizieren, desto niedriger ist die Priorität. So kann man sagen, dass der D-Kanal als Shared Medium genutzt wird. Um zu überprüfen, ob eine Kollision stattgefunden hat, gibt es den E-Kanal. Auf diesen wird der D-Kanal durchgeschleift. Der Teilnehmer kann anhand vom E-Kanal überprüfen, ob die Informationen, die er gesendet haben noch einmal bei ihm ankommen. Ist das der Fall, kann er davon ausgehen, dass es zu keiner Kollision mit den Signalen eines anderen Teilnehmers gekommen ist.
+LAPD ist das Signalisierungsprotokoll des ISDN. An einem $S_0$ Bus teilen sich bis zu 8 Teilnehmer einen D-Kanal. Der Zugriff durch die Teilnehmer ist priorisiert. Zur Regelung, welcher Teilnehmer bevorrechtigt ist, gilt, je mehr logische Einsen den Teilnehmer identifizieren, desto niedriger ist die Priorität. Da der D-Kanal als Shared Medium genutzt wird, muss eine Kollisionsbehandlung stattfinden. Um zu überprüfen, ob eine Kollision stattgefunden hat, gibt es den E-Kanal. Auf diesen wird der D-Kanal durchgeschleift. Der Teilnehmer kann anhand vom E-Kanal überprüfen, ob die Informationen, die er gesendet hat, unverfälscht zurück kommen. Ist das der Fall, kann er davon ausgehen, dass es zu keiner Kollision mit den Signalen anderer Teilnehmer gekommen ist.
 
-Der $S_0$ Bus arbeitet in einem Vollduplexverfahren vgl. Abbildung ~\ref{duplex}. Die Teilnehmer teilen sich das Medium über Zeitschlitze. 
+Der $S_0$ Bus arbeitet in einem Vollduplexverfahren (vgl. Abbildung ~\ref{duplex}). Die Zuweisung der Ressourcen erfolgt über Zeitschlitze.
 
-\subsubsection{Adressierung \label{tei}}
-LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
 \subsubsection{Frames}
-LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche Frametypen benutzt. Ein Frame ist ist folgendermaßen aufgebaut:
+LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden folgende unterschiedliche Frametypen benutzt:
 
 \begin{itemize}
 	\item Blockbegrenzung
@@ -275,12 +277,12 @@ LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche 
 \end{figure}
 
 \paragraph{Blockbegrenzung \label{blockbegrenzung}}
-Die Blockbegrenzung ist eine Byte, das aus eine Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar. Sie hat den Wert 01111110.
+Die Blockbegrenzung ist ein Byte, das aus einer Bitkombination besteht, die im restlichen Block nicht vorkommt. Sie stellt den Anfang und das Ende des Blocks dar und hat die Bitfolge 01111110.
 
 \paragraph{Adressfeld}
-Das Adressfeld besteht aus 2 Bytes. Es enthält den SAPI und den TEI, die je 1 Byte groß sind. Die Größe 1 Byte ist eigentlich ungenau, da man die Bytes wieder genauer aufteilen kann. Jedes dieses Bytes hat ein EA (Extended Adress), damit wird angegeben, ob dem Byte noch weitere folgen. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2. Er besteht aus 6 Bit, zusätzlich sind in dem Byte das C/R Bit und das EA Bit. Das C/R-Feld kennzeichnet, ob das Paket eine Anweisung (Command) für den Empfänger enthält oder ob es eine Antwort (Response) auf eine zuvor erhaltene Anweisung enthält. 
+Das Adressfeld besteht aus 2 Byte. Es enthält den SAPI und den TEI, die je 1 Byte groß sind. Die Größe 1 Byte ist eigentlich ungenau, da man die Byte, wie in Abbildung~\ref{lapd_frame} zu sehen ist, wieder genauer aufteilen kann. Jedes dieses Byte hat ein EA (Extended Adress), damit wird angegeben, ob dem Byte noch weitere folgen. Der SAPI, Service Access Point Identifier,  identifiziert die Dienste der Schicht 2. Er besteht aus 6 Bit,  das C/R Bit und das EA Bit vervollständigen das Byte. Das C/R-Feld kennzeichnet, ob das Paket eine Anweisung (Command) für den Empfänger enthält oder ob es eine Antwort (Response) auf eine zuvor erhaltene Anweisung enthält. 
 
-Aktuell sind 3 Typen des SAPI definiert \cite{SWB-098672061}. 
+Aktuell sind 3 Typen des SAPI definiert \cite{SWB-098672061}:
 \begin{itemize}
 	\item Die gesicherte Übermittlung von Signalisierungsinformationen (SAPI 0)
 	\item Die Übertragung von paketvermittelteten Daten (SAPI 16)
@@ -292,7 +294,7 @@ Aktuell sind 3 Typen des SAPI definiert \cite{SWB-098672061}.
 Der TEI wurde bereits in~\ref{tei} genauer beschrieben. Im Byte des TEI wird EA = 1 gesetzt, da der TEI das letzte Adress Byte ist.
 
 \paragraph{Steuerfeld}
-LAPD kennt 4 Rahmentypen. Sie haben verschiedene Funktionen, die im Steuerfeld gekennzeichnet werden. Die Informationen zu dem Steuerfeld stammen komplett aus \cite{SWB-098672061}.
+LAPD kennt 4 Rahmentypen. Sie haben verschiedene Funktionen, die im Steuerfeld gekennzeichnet werden. Die Informationen zu dem Steuerfeld sind aus \cite{SWB-098672061} zitiert:
 
 \subparagraph{I-Rahmen}
 Der I-Rahmen, Informationsrahmen, dient der Übermittlung von Schicht 3 Informationen. Der I-Rahmen ist der einzige, der einen Sendefolgezähler enthält.
@@ -307,47 +309,66 @@ Der U-Rahmen, umnummerierter Rahmen, dient der Übertragung von Steuerkriterien,
 Der UI-Rahmen, umnummerierter Informationsrahmen, ist eine Spezialität des LAPD Protokolls. Er wird für für spezielle Prozeduren im Zusammenhang mit der P-MP-Konfiguration am Basisanschluss benötigt und überträgt die Informationen des Layer 2 (TEI Management) oder des Layer 3 (kommender Ruf). Er wird genutzt wenn vorher noch keine Layer 2 Verbindung eingerichtet wurde. UI-Rahmen werden nicht quittiert.
 
 \paragraph{Daten}
-Welche Daten übertragen werden, wird im Steuerfeld geregelt. Die reine Übertragung von Layer 3 Daten erfolgt nur in I-Blöcken. Die Blöcke werden nummeriert und von der Gegenseite bestätigt. Die Bestätigung kann durch einen I-Block oder durch einen S-Block bestätigt werden. Wie oft eine Bestätigung zu erfolgen hat, wird durch die Fenstergröße geregelt. Hier sind Werte zwischen eins und sieben möglich. Das Senden von weiteren Frames ist nur möglich, wenn die vorherigen bestätigt wurden. Bei einem Standard ISDN Basisanschluss ist die Fenstergröße eins, bei einem Primärmultiplexanschluss beträgt die Fenstergröße sieben. Das bedeutet, dass bei einem ISDN Basisanschluss nur ein Frame gesendet werden darf, wenn der vorherige bestätigt wurde. Bei einem Primärmultiplexanschluss können sieben Frames gesendet werden, bevor die erste Bestätigung erfolgt sein muss. Erfolgt die Bestätigung von einem Frame, kann ein weiteres gesendet werden.
+Welche Daten übertragen werden, wird im Steuerfeld geregelt. Die reine Übertragung von Layer 3 Daten erfolgt nur in I-Blöcken. Die Blöcke werden nummeriert und von der Gegenseite bestätigt. Der Empfang kann durch einen I-Block oder durch einen S-Block bestätigt werden. Wie oft eine Bestätigung zu erfolgen hat, wird durch die Fenstergröße geregelt. Hier sind Werte zwischen eins und sieben möglich. Das Senden von weiteren Frames ist nur möglich, wenn die vorherigen bestätigt wurden. Bei einem Standard ISDN Basisanschluss ist die Fenstergröße eins, bei einem Primärmultiplexanschluss beträgt die Fenstergröße sieben. Das bedeutet, dass bei einem ISDN Basisanschluss nur ein Frame gesendet werden darf, wenn der vorherige bestätigt wurde. Bei einem Primärmultiplexanschluss können sieben Frames gesendet werden, bevor die erste Bestätigung erfolgt sein muss. Erfolgt die Bestätigung von einem Frame, kann ein weiteres gesendet werden.
 
 Ein I-Block darf maximal 260 Byte groß sein. Daraus ergibt sich eine maximal Gesamtgröße von 268 Byte pro LAPD Frame, wenn I-Blöcke genutzt werden.
 
 \paragraph{Blockprüfung}
-Die Blockprüfung findet bei sowohl beim Sender, als auch beim Empfänger statt. Die \fcs wird vom Sender errechnet und in das entsprechende Feld geschrieben. Der Empfänger errechnet sie auch und vergleicht es mit der des Senders. Unterscheiden sich die Werte, kann von einem Fehler bei der Übertragung ausgegangen werden. Die Größe der \fcs ist auf zwei Byte festgelegt.
+Die Blockprüfung findet bei sowohl beim Sender, als auch beim Empfänger statt. Die \fcs wird vom Sender errechnet und in das entsprechende Feld geschrieben. Der Empfänger errechnet sie auch und vergleicht sie mit der des Senders. Unterscheiden sich die Werte, kann von einem Fehler bei der Übertragung ausgegangen werden. Die Größe der \fcs ist auf zwei Byte festgelegt.
  
 \paragraph{Blockbegrenzung}
 Siehe ~\ref{blockbegrenzung}.
  
 \subsection{PPP}
 
-Das Point-to-Point-Protokoll ist ein typisches OSI Layer 2 Protokoll und hat die Aufgabe Schicht 3 Protokolle über eine Punkt-zu-Punkt-Verbindung zu übertragen. Beispiele für Punkt-zu-Punkt-Verbindungen sind ATM-Verbindungen, leitungsvermittelnde Netze wie Wählverbindungen über das analoge Telefonnetz (über ein Analog-Modem) oder GSM.
+Das Point-to-Point-Protokoll ist ein typisches OSI Layer 2 Protokoll und hat die Aufgabe, Daten der höheren Schichten über eine Punkt-zu-Punkt-Verbindung zu übertragen. Beispiele für Punkt-zu-Punkt-Verbindungen sind ATM-Verbindungen, leitungsvermittelnde Netze, wie Wählverbindungen über das analoge Telefonnetz (über ein Analog-Modem), oder GSM.
 
 Die Aufgaben von PPP sind diese Verbindungen zu initialisieren, aufrecht zu erhalten und wieder zu beenden.
 
-Zur Initialisierung gehört die Authentisierung, die Paketgröße zu bestimmen, IP-Adressen zu vergeben und Daten zu Verschlüsseln.
-Diese Optionen zu Initialisieren nennt man auch Aushandeln und findet über ein eigenes Protokoll das sogenannte Link Control Protocol, im folgenden kurz als LCP bezeichnet, statt. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
+Zur Initialisierung gehört die Authentisierung, das Bestimmen der Paketgröße, die Vergabe von IP Adressen und das Verschlüsseln von Daten.  
+Das Initialisieren dieser Optionen nennt man auch Aushandeln. Zum Aushandeln existiert ein eigenes Protokoll, das sogenannte Link Control Protocol, im Folgenden als LCP bezeichnet. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
+Die Funktionen von LCP im Überblick:
+\begin{itemize}
+	\item Aufbau der Verbindung
+	\item Konfiguration der Verbindung
+	\item Testen der Verbindung
+	\item Abbau der Verbindung
+\end{itemize}
 LCP wird ausserdem auch dafür benutzt um die Verbindung aufzubauen, zu konfigurieren und testen sowie zum Abbauen der Verbindung. 
 
 PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFC, wie in RFC 1662 und 1663, weiter ausgearbeitet.
 
-Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer) das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese Protokolle nennt man Network Control Protocol (NCP).
+%Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer), das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese Protokolle nennt man Network Control Protocol (NCP).
+PPP erlaubt es, dem aufsitzenden Protokoll, einem Protokoll des Layer 3, eigene Optionen auszuhandeln. Diese Optionen haben keine Auswirkungen auf den Layer 2, 
 
 Beispiele für NCP sind IPCP für IP, AppleTalk Control Protokoll für Appletalk oder IPXCP für IPX. Das IPCP steht für IP Control Protocol.
 
 Wenn Beispielsweise IP über PPP übertragen wird dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Clienten eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
-
+\large{{\textcolor{red}{Da noch mal genauer nachlesen!!!}}}
 
 \subsubsection{LCP}
 
-Das Link Control Protocol stellt Methoden zum steuern der Verbindung in Hinsicht auf Etablierung, Konfiguration und Verwaltung sowie auf das Beenden einer Punkt zu Punkt-Verbindung zur Verfügung. LCP selbst durchläuft vier einzelne Phasen. In der ersten Phase wird eine Verbindung aufgebaut und die Konfiguration wird ausgehandelt. Noch bevor Segmente oder Datagramme der Vermittlungsschicht ausgetauscht werden können, muss LCP die erste Phase abschließen. Die Erste Phase ist dann beendet wenn LCP die ausgehandelten Parameter Bestätigt. Dies ist dann der Fall wenn ein Bestätigungsframe einmal gesendet sowie empfangen wurde. Danach wird die Qualität der Verbindung ermittelt, was aber Optional ist. In dieser Phase wird ermittelt ob die Qualität der Verbindung für die Vermittlungschicht ausreicht. LCP kann die Verbindung der Vermittlungsschicht solange herauszögen bis diese Phase abgeschlossen ist. 
-Nachdem LCP die Qualität geprüft hat wird die Vermittlungsschicht von den NCP konfiguriert und kann gestartet so wie beendet werden. 
-Wenn die Verbindung von LCP beendet wird gibt es den hören Protokollen bescheid so das diese entsprechend reagieren können. 
-Dies kann jederzeit durch den Benutzer aber auch durch Physische Ereignisse passieren.
+Das Link Control Protocol stellt PPP Methoden zum Steuern der Verbindung zur Verfügung. Diese Methoden werden genutzt, um eine Punkt-zu-Punkt-Verbindung  etablieren, konfigurieren, verwalten und  beenden zu können.
+LCP selbst durchläuft vier einzelne Phasen:
+\begin{enumerate}
+	\item Aufbau der Verbindung. Dabei wird die Konfiguration ausgehandelt. Dieser Schritt muss vor dem nächsten abgeschlossen sein, abgeschlossen ist er, wenn LCP die ausgehandelten Parameter bestätigt. Die Bestätigung ist erfolgt, wenn ein Bestätigungsframe gesendet und empfangen wurde.
+	\item (optional)  Die Qualität der Verbindung wird ermittelt und es wird ermittelt, ob die Qualität für den Layer 3 ausreichend ist. LCP kann die Verbindung des Layer 3 so lange unterbinden, bis diese Phase abgeschlossen ist. 
+	\item Übergabe an die NCP Protokolle.   
+	\item Beenden der Verbindung. Beim regulären Beenden der Verbindung durch das LCP werden die höheren Protokolle informiert, die dann entsprechend reagieren können. Das Beenden kann sowohl durch den Benutzer, als auch durch physikalische Ereignisse erfolgen. 
+\end{enumerate}
+% In der ersten Phase wird eine Verbindung aufgebaut und die Konfiguration wird ausgehandelt. Noch bevor Segmente oder Datagramme der Vermittlungsschicht ausgetauscht werden können, muss LCP die erste Phase abschließen. Die Erste Phase ist dann beendet wenn LCP die ausgehandelten Parameter Bestätigt. Dies ist dann der Fall wenn ein Bestätigungsframe einmal gesendet sowie empfangen wurde. Danach wird die Qualität der Verbindung ermittelt, was aber Optional ist. In dieser Phase wird ermittelt ob die Qualität der Verbindung für die Vermittlungschicht ausreicht. LCP kann die Verbindung der Vermittlungsschicht solange herauszögen bis diese Phase abgeschlossen ist. 
+%Nachdem LCP die Qualität geprüft hat wird die Vermittlungsschicht von den NCP konfiguriert und kann gestartet so wie beendet werden. 
+%Wenn die Verbindung von LCP beendet wird gibt es den hören Protokollen bescheid so das diese entsprechend reagieren können. 
+%Dies kann jederzeit durch den Benutzer aber auch durch Physische Ereignisse passieren.
 
 LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
 
+\large{\textcolor{red}{LCP Frames suchen}}
 
-Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese verhalten festhalten. 
-Im folgenden die einzelnen Typen und ihre Bedeutung:
+%Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese Verhalten festhalten. 
+LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. \textcolor{red}{Was für Prozesse?}
+
+Im Folgenden die einzelnen Typen und ihre Bedeutung:
 
 \begin{itemize}
 	\item Configure-request	- Liste der vorgeschlagenen Optionen und Werte
@@ -371,6 +392,8 @@ Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus 
 Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
 Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
 
+\large{\textcolor{red}{Noch mal nachlesen}}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}	
@@ -382,7 +405,7 @@ Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand 
 
 \subsubsection{PPP Frame}
 
-Das PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung
+PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung
 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
