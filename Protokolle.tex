@@ -110,33 +110,34 @@ Im Folgenden sollen verschiedene Layer 2 Protokolle für kabelgebundene Netze mi
 \caption{Das \osi im Überblick \cite{osi_modell}}
 \label{osi_modell}
 \end{figure} 
-Diese Grafik stellt die Schichten des \osi da. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte ermöglicht. Es beschreibt ein komplettes Telekommunikationsnetzwerk. Die einzelnen Funktionen sind in 7 Schichten aufgeteilt. 
+Diese Grafik stellt die Schichten des \osi dar. Das \osi, (Open Systems Interconnection Model) ist ein allgemeines Kommunikationsmodell,  das die Kommunikation unterschiedlichster Geräte beschreibt. Es beschreibt ein komplettes Telekommunikationsnetzwerk. Die einzelnen Funktionen sind in 7 Schichten aufgeteilt. 
 
 Das \osi standardisiert die Netzwerk Architektur. Dadurch können Hersteller Lösungen anbieten, die auf der ganzen Welt genutzt werden können. Eine proprietäre Lösung hätte zu Insellösungen geführt. Ein weiterer Vorteil ist, dass die einzelnen Schichten, oder Layer, über Schnittstellen miteinander kommunizieren. Das ermöglicht ein Austauschen einzelner Komponenten, ohne die gesamte Architektur ändern zu müssen.
 
 Da das \osi nur ein Referenzmodell darstellt, müssen die einzelnen Schichten konkret implementiert werden. Diese Implementierungen sind eigene Protokolle. 
 
 \subsection{Der Layer 2}
-Der Layer 2, Data Link Layer, setzt auf dem Physical Layer auf und stellt dem Network Layer seine Dienste zur Verfügung. Der Physical Layer beschriebt das Medium über das die Signale übertragen werden. Hier findet noch keine Logik statt. 
+Der Layer 2, Data Link Layer, setzt auf dem Physical Layer auf und stellt dem Network Layer seine Dienste zur Verfügung. Der Physical Layer beschreibt, wie der Name schon sagt, die physikalischen Eigenschaften der Verbindung.  Hier findet noch keine Logik statt. Als höhere Schicht nutzt der Data Link Layer die Eigenschaften des Physical Layer, bzw. nutzt ihn, um die Informationen auf das Medium zu bringen.
 
 Die Aufgaben des Layer 2 im Überblick:
 \begin{itemize}
-	\item Aufteilung in Pakete
+	\item Aufteilung in Frames
 	\item Fehlerkontrolle
 \end{itemize} 
 
 \subsubsection{Aufteilung in Frames}
-Die Datenblöcke werden im Layer 2 in Frames aufgeteilt. Die Vorteile des Framing sind die schnellere Nutzung eines shared Mediums und dass fehlerhafte Daten nicht komplett übertragen werden müssen.
+Die Datenblöcke werden im Layer 2 in Frames aufgeteilt. Die Vorteile des Framing sind die schnellere Nutzung eines shared Mediums und dass bei fehlerhaften Daten nur die fehlerhaften Frames neu übertragen werden müssen. Die schnelle Nutzung eines Shared Mediums resultiert daraus, dass ein Sender, der einen großen Datensatz überträgt, nicht dauerhaft das Medium belegt. Sendet der Teilnehmer A ein Gigabyte und der Teilnehmer B nur ein Byte, kann der Teilnehmer B seine Frames zwischen denen von Teilnehmer A unterbringen und seine Übertragung abschließen, bevor Teilnehmer B fertig ist.
+ 
 \subsubsection{Fehlerkontrolle}
-Der Data Link Layer führt eine Fehlerkontrolle durch. Dazu zählen eine Suche nach Duplikaten, nach inkorrekt oder unvollständig gesendeten Paketen. Wenn ein Fehler entdeckt wird, wird eine neue Übertragung der Frames angefordert \cite[S. 91]{SWB-107223570}. Die Fehlerkontrolle wird über den \glqq Cyclic Redundancy Check\grqq ~CRC durchgeführt. Dieses Verfahren ist eine Möglichkeit zur Prüfsummenberechnung, die beim Sender und der Senke durchgeführt wird. Sind beide Prüfsummen gleich, kann angenommen werden, dass das Frame korrekt übertragen wurde. 
+Der Data Link Layer führt eine Fehlerkontrolle durch. Dazu zählen eine Suche nach Duplikaten und eine Suche nach inkorrekt oder unvollständig gesendeten Paketen. Wenn ein Fehler entdeckt wird, wird eine neue Übertragung der Frames angefordert \cite[S. 91]{SWB-107223570}. Die Fehlerkontrolle wird über den \glqq Cyclic Redundancy Check\grqq ~CRC durchgeführt. Dieses Verfahren ist eine Methode zur Prüf\-summen\-be\-rech\-nung, die beim Sender und bei der Senke durchgeführt wird. Sind beide Prüfsummen gleich, kann angenommen werden, dass das Frame korrekt übertragen wurde. Damit die Senke die Prüfsummen vergleichen kann wird die des Senders mitgeschickt.
 
-Die Frames werden mit Sequence Numbers durchnummeriert. Der Empfänger prüft, ob die Frames in der richtigen Reihenfolge ankommen. Bei einer \glqq out-of-sequence transmission\grqq ~kann von einem verlorenen Frame ausgegangen werden, das entsprechende Frame wird neu angefordert, bzw. Layer 3 wird benachrichtigt.
+Die Frames werden mit Sequence Numbers durchnummeriert. Der Empfänger prüft, ob die Frames in der richtigen Reihenfolge ankommen. Bei einer \glqq out-of-sequence transmission\grqq ~kann von einem verlorenen Frame ausgegangen werden, das entsprechende Frame wird neu angefordert, bzw. der Layer 3 wird benachrichtigt.
 \section{Die Layer 2 Protokolle im Überblick}
 
 \subsection{Ethernet}
-Ethernet ist ein weit verbreitetes Layer 2 Protokoll. 90\% aller lokal installierten Netzwerke sind mit Ethernet realisiert\cite{SWB-097965316}. Ethernet wurde ursprünglich für die Anbindung eines Druckers bei der Firma Xerox Corporation entwickelt. Die damalige Übertragungsgeschwindigkeit von 2,94 Mbit/s wurde auf aktuell 100 Gbit/s gesteigert, weitere Steigerungen sind zu erwarten.
+Ethernet ist ein weit verbreitetes Layer 2 Protokoll. 90\% aller lokal installierten Netzwerke sind mit Ethernet realisiert\cite{SWB-097965316}. Ethernet wurde ursprünglich für die Anbindung eines Druckers bei der Firma Xerox Corporation entwickelt. Die damalige Über\-tragungs\-geschwindig\-keit von 2,94 Mbit/s wurde auf aktuell 100 Gbit/s gesteigert, weitere Steigerungen sind zu erwarten.
 
-Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportiert. Kollisionen werden durch \glqq CSMA/CD\grqq ~entdeckt, bzw. aufgelöst. Die Übertragung läuft gleichberechtigt und verbindungslos. Die Daten werden an alle Teilnehmer weitergeleitet, diese vergleichen die Empfängeradresse mit ihrer eigenen und verwerfen die Frames, die nicht an sie adressiert sind. Diese Aussage kann eingeschränkt werden, da Switche die Daten nur an Ports leiten, an denen die entsprechenden Senken angeschlossen sind. 
+Die Daten werden bei Ethernet über einen eigenen Übertragungskanal transportiert (vgl.~\ref{zugriffEthernet}). Kollisionen werden durch \glqq CSMA/CD\grqq ~entdeckt, bzw. aufgelöst. Die Über\-trag\-ung läuft gleichberechtigt und verbindungslos. Die Daten werden an alle Teilnehmer weitergeleitet, diese vergleichen die Empfängeradresse mit ihrer eigenen und verwerfen die Frames, die nicht an sie adressiert sind. Diese Aussage kann eingeschränkt werden, da Switche die Daten nur an Ports leiten, an denen die entsprechenden Senken angeschlossen sind. 
 
 \subsubsection{Gebräuchliche Übertragungsmedien des Ethernet}
 \begin{figure}[H]
@@ -162,19 +163,19 @@ Die Daten werden im Ethernet über einen eigenen Übertragungskanal transportier
 \end{minipage}
 \end{figure}
  
-Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
+Historisch gesehen muss das Koaxialkabel als Medium des Ethernet genannt werden. Das Koaxialkabel wurde 1990 mit der Einführung von 10BaseT (IEEE 802.3i) durch Unshielded Twisted Pair Kabel ersetzt. Ab 1998 wurden mit der Einführung des Gigabit Ethernet auch Lichtwellenleiter genutzt. 
 
 \subsubsection{Adressierung \label{ethernet_adresse}}
  Ethernet nutzt zur Adressierung von Teilnehmern deren MAC-Adresse. MAC-Adressen, Media Access Control Adress, sind Hardwareadressen und werden weltweit eindeutig vergeben. Sie bestehen aus 6 Byte und sind nach folgendem Muster aufgebaut: 
  
- Hersteller--Hersteller--Hersteller--xx--xx--xx 
+\framebox{ Hersteller--Hersteller--Hersteller--xx--xx--xx }
 
-Der Herstellerteil, auch Organizationally  Unique Identifier (OUI), wird von der IEEE vergeben. Jeder Hersteller hat seinen eigenen Bereich, der durch die ersten 3 Bytes bestimmt wird. Die letzten 3 Bytes werden vom Hersteller selber vergeben. Dabei ist der Hersteller für die eindeutige Vergabe der letzten 3 Bytes verantwortlich. Einige Hersteller haben mittlerweile mehrere eigene Bereiche.
+Der Herstellerteil, auch Organizationally  Unique Identifier (OUI), wird von der IEEE vergeben. Jeder Hersteller hat seinen eigenen Bereich, der durch die ersten 3 Bytes bestimmt wird. Die letzten drei Bytes werden vom Hersteller selber vergeben. Dabei ist der Hersteller für die eindeutige Vergabe der letzten drei Bytes verantwortlich. Einige Hersteller haben mittlerweile mehrere eigene Bereiche.
 
-\subsubsection{Zugriff auf das Medium}
-Historisch gesehen nutzt Ethernet das Übertragungsmedium als Shared Medium. Die einzelnen Teilnehmer wurden am selben Koaxialkabel über T-Stücke angeschlossen. Um Kollisionen zu vermeiden, wurde ein geeignetes Verfahren zur Vermeidung benötigt. Von einer Kollision spricht man, wenn mehrere Teilnehmer gleichzeitig auf das Medium zugreifen würden, also Signale aussenden. Die Signale würden sich gegenseitig überlagern und wären nicht mehr nutzbar. Bei Ethernet wird CSMA/CD eingesetzt. Bei diesem Verfahren wird vor dem Senden geprüft, ob die Leitung frei ist. Erst wenn die Leitung frei ist wird gesendet (Carrier Sense). Wenn zufällig mehrere Teilnehmer gleichzeitig ein Signal aussenden (Multiple Access) kommt es dennoch zu Kollisionen. Der/Die Sender prüfen während dem Senden, ob es zu Kollisionen kommt (Collision Detect) und brechen ihre Übertragung im Fall einer Kollision ab. Nach einem Abbruch wird eine zufällige Zeit gewartet bis erneut gesendet wird. Der Grund, warum es trotz diesem Verfahren zu Kollisionen kommen kann, ist die Signallaufzeit. Die Signale brauchen eine gewisse Zeit um über die Leitungen übertragen zu werden. 
+\subsubsection{Zugriff auf das Medium \label{zugriffEthernet}}
+Historisch gesehen nutzt Ethernet das Übertragungsmedium als Shared Medium. Die einzelnen Teilnehmer wurden am selben Koaxialkabel über T-Stücke angeschlossen. Um Kollisionen zu vermeiden, wurde ein geeignetes Verfahren zur Vermeidung benötigt. Von einer Kollision spricht man, wenn mehrere Teilnehmer gleichzeitig auf das Medium zugreifen, also Signale aussenden. Die Signale  überlagern sich gegenseitig und sind nicht mehr nutzbar. Bei Ethernet wird CSMA/CD eingesetzt. Bei diesem Verfahren wird vor dem Senden geprüft, ob die Leitung frei ist. Erst wenn die Leitung frei ist wird gesendet (Carrier Sense). Wenn zufällig mehrere Teilnehmer gleichzeitig ein Signal aussenden (Multiple Access) kommt es dennoch zu Kollisionen. Der/Die Sender prüfen während dem Senden, ob es zu Kollisionen kommt (Collision Detect) und brechen ihre Übertragung im Fall einer Kollision ab. Nach einem Abbruch wird eine zufällige Zeit gewartet bis erneut gesendet wird. Der Grund, warum es trotz diesem Verfahren zu Kollisionen kommen kann, ist die Signallaufzeit. Die Signale brauchen eine gewisse Zeit um über die Leitungen übertragen zu werden. 
 
-In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet, dass ein Übertragungskanal zum Senden und zum Empfangen genutzt wird. Dadurch halbiert sich natürlich im schlimmsten Fall die Datenrate. Mit der Einführung von Twisted Pair Kabeln und Lichwellenleitern wurde Ethernet auf den Vollduplex Betrieb umgestellt. Dadurch konnte die Übertragungsrate gesteigert werden und Kollisionen wurden unwahrscheinlicher.
+In seinen Anfangszeiten übertrug Ethernet im Halbduplex Verfahren. Das bedeutet, dass ein Übertragungskanal zum Senden und zum Empfangen genutzt wird. Dadurch halbiert sich natürlich rechnerisch die Datenrate, bzw. kann durch häufige Kollisionen und den damit verbundenen Wartezeiten noch weiter absinken. Mit der Einführung von Twisted Pair Kabeln und Lichwellenleitern wurde der Vollduplex Betrieb ermöglicht. Dadurch konnte die Übertragungsrate gesteigert werden und Kollisionen wurden vermieden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\linewidth]{Grafiken/duplex.jpg}
@@ -226,6 +227,10 @@ Ethernet ist keiner bestimmten Netzwerk Topologie zuzuordnen. Heute gebräuchlic
 \subsection{LAPD}
 LAPD, Link Access Procedure on the D-channel ist auch ein Protokoll der Schicht 2. Es wird genutzt um Layer 3 Informationen zwischen den Teilnehmer des ISDN Netzwerks zu übertragen. Für diese Übertragung wird der D-Kanal genutzt.
 
+
+\subsubsection{Der D-Kanal}
+Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
+
 \subsubsection{Gebräuchliche Medien des LAPD}
 Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. Für  $S_0$ werden üblicherweise 4 Draht Kupfer Verkabelungen verwendet, für $U_{K0}$ eine Kupfer Doppelader.
 \begin{figure}[H]
@@ -243,17 +248,14 @@ Der Layer 1 unter LAPD wird durch den $S_0$ und den $U_{K0}$ Bus beschrieben. F�
 \end{minipage}
 \end{figure}
 
-
-\subsubsection{Der D-Kanal}
-Der D-Kanal wird im ISDN zur Signalisierung genutzt. Er stellt 16 kbit/s zur Verfügung. Signalisieren bedeutet, dass der Teilnehmer und die Vermittlungsanlage Informationen austauschen. Das können Informationen sein, ob der Teilnehmer verfügbar ist, oder auch Informationen mit denen ein Gespräch aufgebaut wird. Im Gegensatz zu den B-Kanälen, über die Nutzdaten, wie z.B. Sprache, übertragen wird, kommunizieren über den D-Kanal nur Prozessoren.
+\subsubsection{Adressierung \label{tei}}
+LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
 \subsubsection{Der Zugriff auf das Medium}
 LAPD ist das Signalisierungsprotokoll des ISDN. An einem $S_0$ Bus teilen sich bis zu 8 Teilnehmer einen D-Kanal. Der Zugriff durch die Teilnehmer ist priorisiert. Zur Regelung, welcher Teilnehmer bevorrechtigt ist, gilt, je mehr logische Einsen den Teilnehmer identifizieren, desto niedriger ist die Priorität. So kann man sagen, dass der D-Kanal als Shared Medium genutzt wird. Um zu überprüfen, ob eine Kollision stattgefunden hat, gibt es den E-Kanal. Auf diesen wird der D-Kanal durchgeschleift. Der Teilnehmer kann anhand vom E-Kanal überprüfen, ob die Informationen, die er gesendet haben noch einmal bei ihm ankommen. Ist das der Fall, kann er davon ausgehen, dass es zu keiner Kollision mit den Signalen eines anderen Teilnehmers gekommen ist.
 
 Der $S_0$ Bus arbeitet in einem Vollduplexverfahren vgl. Abbildung ~\ref{duplex}. Die Teilnehmer teilen sich das Medium über Zeitschlitze. 
 
-\subsubsection{Adressierung \label{tei}}
-LAPD nutzt zur Adressierung der Teilnehmer den TEI, Terminal Endpoint Identifier. Der TEI wird entweder durch eine feste Einstellung im Endgerät oder durch die Vergabe der Vermittlungsstelle vergeben. Er besteht aus 7 Bit. Der TEI ist im normalen Betriebszustand eindeutig, darf aber nicht mit der Rufnummer verwechselt werden.
 
 \subsubsection{Frames}
 LAPD teilt die Daten der Schicht 3 in Frames auf. Dabei werden unterschiedliche Frametypen benutzt. Ein Frame ist ist folgendermaßen aufgebaut:
