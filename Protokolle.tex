@@ -362,23 +362,7 @@ LCP selbst durchläuft vier einzelne Phasen:
 LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
 
 %Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese Verhalten festhalten. 
-LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. \textcolor{red}{Was für Prozesse?}
 
-Im Folgenden die einzelnen Typen und ihre Bedeutung:
-
-\begin{itemize}
-	\item Configure-request	- Liste der vorgeschlagenen Optionen und Werte
-	\item Configure-ack		- Alle Optionen werden angenommen
-	\item	Configure-nak		- Einige Optionen werden nicht angenommen
-	\item Configure-reject	- Einige Optionen können nicht Verhandelt werden
-	\item Terminate-request	- Anforderungen zum Trennen der Verbindung
-	\item Terminate-ack		- Verbindung wurde getrennt
-	\item Code-reject		- Unbekannte Anforderungen erhalten
-	\item Protocol-reject		- Unbekanntes Protocol angefordert
-	\item Echo-request		- Anforderungen, den Rahmen zurückzusenden
-	\item Echo-reply		- Rückgabe des Rahmens
-	\item	Discard-request	- Rahmen verwerfen (für Testzwecke)
-\end{itemize} 
 
 
 
@@ -386,7 +370,7 @@ Im Folgenden die einzelnen Typen und ihre Bedeutung:
 
 Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Zeichnung.
 Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
-Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
+Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, d.h. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
 
 \large{\textcolor{red}{Noch mal nachlesen}}
 
@@ -401,21 +385,20 @@ Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand 
 
 \subsubsection{PPP Frame}
 
-PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung. \textcolor{red}{Ist das so? Warum dann am Ende FCS?}
-
+PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/lcp-header-alone.jpg}	
-	\caption{Darstellung eines PPP Frames \cite{ppp-lcp-info.header}}
+	\caption{Darstellung eines PPP Frames}
 	\label{ppp_frame}
 \end{figure}
 
 \paragraph{Flag}
 
 Das Flag besteht am Anfang, sowie am Ende  aus einem Byte (011111110). 
-% dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen, das der Frame zu Ende ist.
+Dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen, das der Frame zu Ende ist.
 
 
 \paragraph{Adress}
@@ -447,13 +430,30 @@ Die Prüfsumme kann auf bis zu 4 Byte ausgehandelt werden, im Normalfall reichen
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/lcp-header.jpg}	
-	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames\cite{ppp-lcp-info.header}}
+	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames}
 \end{figure}
 Die Grafik zeigt noch einmal den PPP Frame. In diesem Abschnitt möchten wir aber das Information Feld genauer betrachten.
 
 In dem Information Feld wird, zur Verhandlung, wieder ein eigener Rahmen übertragen, der LCP Frame. 
 \paragraph{Code}
-Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle, bzw. Operationen wurden bereits in  \ref{lcp_operationen} näher beschrieben.
+Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die folgenden Befehle sind dafür vorgesehen:
+
+
+Im Folgenden die einzelnen Typen und ihre Bedeutung:
+
+\begin{itemize}
+	\item Configure-request	- Liste der vorgeschlagenen Optionen und Werte
+	\item Configure-ack		- Alle Optionen werden angenommen
+	\item	Configure-nak		- Einige Optionen werden nicht angenommen
+	\item Configure-reject	- Einige Optionen können nicht Verhandelt werden
+	\item Terminate-request	- Anforderungen zum Trennen der Verbindung
+	\item Terminate-ack		- Verbindung wurde getrennt
+	\item Code-reject		- Unbekannte Anforderungen erhalten
+	\item Protocol-reject		- Unbekanntes Protocol angefordert
+	\item Echo-request		- Anforderungen, den Rahmen zurückzusenden
+	\item Echo-reply		- Rückgabe des Rahmens
+	\item	Discard-request	- Rahmen verwerfen (für Testzwecke)
+\end{itemize} 
 
 \paragraph{Indentifier}
 Der Indentifier ermöglicht die Unterscheidung, ob ein Rahmen eine Anfrage oder eine  Antwort enthält.
@@ -467,10 +467,10 @@ Im Data/Options Feld ist der eigentliche Payload enthalten. Die Größe des Feld
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/lcp-option-header.jpg}	
-	\caption{Darstellung eines Options Frames innerhalb eines LCP Frames\cite{ppp-lcp-option-info2.header}}
+	\caption{Darstellung eines Options Frames innerhalb eines LCP Frames}
 \end{figure}
 
-Für das Type-Feld sind folgende Werte zulässig:
+Beispiele des Type-Feld sind folgende:
 
 \begin{itemize}
 	\item 1 Maximum-Receive-Unit
