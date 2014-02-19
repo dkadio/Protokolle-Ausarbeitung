@@ -14,7 +14,7 @@
 \usepackage[utf8]{inputenc}
 
 %Schriftart Helvetica 
-\usepackage[scaled]{helvet}
+%\usepackage[scaled]{helvet}
 
 %Seitenränder
 \usepackage{geometry}
@@ -37,7 +37,6 @@
 
 %Die Einrücktiefe bei einem neuen Absatz
 \setlength{\parindent}{0pt}
-
 
 %Fülltext
 \usepackage{blindtext}
@@ -201,7 +200,7 @@ Ein Frame ist folgendermaßen aufgebaut:
 	\label{ethernet_frame}
 \end{figure}
 
-\paragraph{Präambel}
+\paragraph{Präambel \label{ethernet_praeambel}}
 Die Präambel enthält eine Bitfolge, die dem Empfänger signalisiert, dass ein Rahmen ankommt. Die Präambel besteht aus 8 Byte mit einer alternierenden Folge aus 0 und 1. Die letzten 2 Bits im letzten Byte sind immer 1. Hier besteht ein kleiner Unterschied zwischen DIX und IEEE. Obwohl die Bitfolgen die gleichen sind, ist die Präambel im IEEE Standard formell in die 7 Byte lange Präambel und den 1 Byte langen Start-of-Frame-Delimiter aufgeteilt.
 Die Präambel dient u.a. zur Synchronisation der Empfängerstationen. 
 
@@ -323,7 +322,7 @@ Siehe ~\ref{blockbegrenzung}.
 
 Das Point-to-Point-Protokoll ist ein typisches OSI Layer 2 Protokoll und hat die Aufgabe, Daten der höheren Schichten über eine Punkt-zu-Punkt-Verbindung zu übertragen. Beispiele für Punkt-zu-Punkt-Verbindungen sind ATM-Verbindungen, leitungsvermittelnde Netze, wie Wählverbindungen über das analoge Telefonnetz (über ein Analog-Modem), oder GSM.
 
-Die Aufgaben von PPP sind diese Verbindungen zu initialisieren, aufrecht zu erhalten und wieder zu beenden.
+Die Aufgaben von PPP sind, neben den klassischen Layer 2 Aufgaben, diese Verbindungen zu initialisieren, aufrecht zu erhalten und wieder zu beenden.
 
 Zur Initialisierung gehört die Authentisierung, das Bestimmen der Paketgröße, die Vergabe von IP Adressen und das Verschlüsseln von Daten.  
 Das Initialisieren dieser Optionen nennt man auch Aushandeln. Zum Aushandeln existiert ein eigenes Protokoll, das sogenannte Link Control Protocol, im Folgenden als LCP bezeichnet. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
@@ -339,14 +338,13 @@ LCP wird ausserdem auch dafür benutzt um die Verbindung aufzubauen, zu konfigur
 PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFC, wie in RFC 1662 und 1663, weiter ausgearbeitet.
 
 %Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer), das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese Protokolle nennt man Network Control Protocol (NCP).
-PPP erlaubt es, dem aufsitzenden Protokoll, einem Protokoll des Layer 3, eigene Optionen auszuhandeln. Diese Optionen haben keine Auswirkungen auf den Layer 2, 
+PPP erlaubt es dem aufsitzenden Protokoll, einem Protokoll des Layer 3, eigene Optionen auszuhandeln. Diese Optionen betreffen lediglich das Protokoll des höheren Layer. Die Funktionalität dieser Aushandlungen ist in den Network Control Protocol, NPC, implementiert.
 
 Beispiele für NCP sind IPCP für IP, AppleTalk Control Protokoll für Appletalk oder IPXCP für IPX. Das IPCP steht für IP Control Protocol.
 
-Wenn Beispielsweise IP über PPP übertragen wird dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Clienten eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
-\large{{\textcolor{red}{Da noch mal genauer nachlesen!!!}}}
+Wenn Beispielsweise IP über PPP übertragen wird, dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Client eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
 
-\subsubsection{LCP}
+\subsubsection{LCP \label{lcp_operationen}}
 
 Das Link Control Protocol stellt PPP Methoden zum Steuern der Verbindung zur Verfügung. Diese Methoden werden genutzt, um eine Punkt-zu-Punkt-Verbindung  etablieren, konfigurieren, verwalten und  beenden zu können.
 LCP selbst durchläuft vier einzelne Phasen:
@@ -362,8 +360,6 @@ LCP selbst durchläuft vier einzelne Phasen:
 %Dies kann jederzeit durch den Benutzer aber auch durch Physische Ereignisse passieren.
 
 LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
-
-\large{\textcolor{red}{LCP Frames suchen}}
 
 %Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese Verhalten festhalten. 
 LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. \textcolor{red}{Was für Prozesse?}
@@ -405,62 +401,70 @@ Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand 
 
 \subsubsection{PPP Frame}
 
-PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung
+PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung. \textcolor{red}{Ist das so? Warum dann am Ende FCS?}
 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/ppp-frame.jpg}	
-	\caption{Darstellung eines PPP Frames \cite{*}}
+	\caption{Darstellung eines PPP Frames \cite{ppp-lcp-info.header}}
 	\label{ppp_frame}
 \end{figure}
 
 \paragraph{Flag}
 
-Das Flag besteht am Anfang wie am Ende aus einem Byte (011111110) dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen das der Frame zu Ende ist.
+Das Flag besteht am Anfang, sowie am Ende  aus einem Byte (011111110). 
+% dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen, das der Frame zu Ende ist.
 
 
 \paragraph{Adress}
 
-Das Adressfeld steht immer auf einem festen Wert und zwar aus acht mal eins. Dies dient dazu das alle Stationen den Rahmen akzeptieren und zum vermeiden das Verbindungsadressen zugewiesen werden müssen. Da dieses Feld in der Standartkonfiguration immer gleich ist, gibt es wie auch bei dem Steuerungsfeld einen die Möglichkeit zwischen zwei Parteien diese Felder einfach entfallen zu lassen und damit zwei Byte pro Rahmen einzusparen.
+Das Adressfeld besteht aus einem Byte mit der festen Bitfolge 11111111. Dies dient dazu, dass alle Stationen den Rahmen akzeptieren und zum Vermeiden, dass Verbindungsadressen zugewiesen werden müssen. Da dieses Feld in der Standardkonfiguration immer gleich ist, besteht die Möglichkeit, wie auch bei dem Steuerungsfeld, dieses Feld zwischen zwei Parteien entfallen zu lassen. Dadurch können zwei Byte pro Rahmen eingespart werden.
 
 
-\paragraph{Steuerung}
+\paragraph{Control}
 
-Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnummerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche Übertragung zu realisieren. Die genauen Details sind in RFC 1663 definiert, die jedoch in der Praxis nicht häufig eingesetzt werden.
-
-
-\paragraph{Protokoll}
-
-Das vierte Feld, Protokoll, gibt an welche Art von Paket in den Nutzdaten übertragen wird. Dies können beispielsweise LCP, NCP, IP, IPX und andere Protokolle sein. Normalerweise ist die Größe des Feldes auf zwei Byte festgelegt, es ist jedoch möglich über das LCP auf ein Byte runter zu handeln.
+Das Feld Steuerung, als Standardwert 00000011, zeigt einen unnummerierten Rahmen an. PPP bietet keine zuverlässige Übertragung mit Folgenummern und Bestätigungen. Es ist allerdings möglich eine solche 
+Über\-tra\-gung zu realisieren. Die genauen Details sind in RFC 1663 definiert, sie werden jedoch in der Praxis nicht häufig eingesetzt.
 
 
-\paragraph{Nutzdaten}
+\paragraph{Protocol}
 
-Die große des Feldes Nutzdaten wird üblicherweise von den Parteien ausgehandelt und festgelegt. Findet dieser Prozess über das LCP nicht statt so ist das Feld standardmäßig auf 1.500 Byte festgelegt.
-Wenn es nicht genug Daten geben sollte um ein Frame zu füllen kann über Padding dieses auch bei Bedarf aufgefüllt werden.
+Das vierte Feld, Protokoll, gibt an welche Art von Paket in den Nutzdaten übertragen wird. Dies können beispielsweise LCP, NCP, IP, IPX und andere Protokolle sein. Normalerweise ist die Größe des Feldes auf zwei Byte festgelegt, es ist jedoch möglich, die Länge über LCP auf ein Byte herunter zu handeln.
 
-\paragraph{Prüfsumme}
 
-Die Prüfsumme kann auf bis 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum überprüfen ob der Rahmen richtig gesendet worden ist. Die Prüfsumme wird anhand des CRC Algorithmus vom Sender und Empfänger berechnet. 
+\paragraph{Information}
+
+In diesem Feld werden die eigentlichen Nutzdaten übertragen. Die Größe des Nutzdaten Feldes wird üblicherweise von den Parteien ausgehandelt und festgelegt. Findet dieser Prozess über das LCP nicht statt, so ist das Feld standardmäßig auf 1.500 Byte festgelegt.
+Kann das Feld bei einer Übertragung nicht vollständig gefüllt werden, wird es durch Padding Daten gefüllt.
+
+\paragraph{FCS}
+
+Die Prüfsumme kann auf bis zu 4 Byte ausgehandelt werden, im Normalfall reichen aber 2 Byte aus. Sie dient zum Überprüfen ob der Rahmen richtig gesendet wurde. Die Prüfsumme wird anhand des CRC Algorithmus vom Sender und Empfänger berechnet. 
 
 \subsubsection{LCP Frame}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/lcp-header.jpg}	
-	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames\cite{*}}
+	\caption{Darstellung eines LCP Frames innerhalb eines PPP Frames\cite{ppp-lcp-info.header}}
 \end{figure}
+Die Grafik zeigt noch einmal den PPP Frame. In diesem Abschnitt möchten wir aber das Information Feld genauer betrachten.
+
+Das Information Feld ist wieder ein eigener Rahmen, der LCP Frame. 
 \paragraph{Code}
-Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle die hier stehen können aus der Aufzählung aus dem Kapitel LCP Verhandlung entnommen werden.
+Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle, bzw. Operationen wurden bereits in  \ref{lcp_operationen} näher beschrieben.
 
 \paragraph{Indentifier}
-Der Identifizier wird benutzt um zwischen Anfrage und Antwort zu unterscheiden
+Der Indentifier ermöglicht die Unterscheidung, ob ein Rahmen eine Anfrage oder eine  Antwort enthält.
 
 \paragraph{Length}
-Das Lenght Feld wird benutzt um die Größe des gesamten Frames zu übersenden. Das heisst inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen worden sind.
+%Das Lenght Feld wird benutzt um die Größe des gesamten Frames zu übersenden. Das heisst inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen worden sind.
+Das Lenght Feld beschreibt die Größe des gesamten Frames. Die gesamte Größe ist die Größe inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen wurden.
 \paragraph{Data/Options}
-Hier werden die zu Übertragenden Daten gesendet. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Hier wird die Option an sich genannt die Länge der Daten die übertragen werden und die eigentlichen Daten, die die Option genau beschreiben. Ein Beispiel hierfür wäre die Option Authentication und als Daten das gewählte Authentication-Protocol.
+Im Data/Options Feld ist der eigentliche Payload enthalten. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Der Header besteht aus der Beschreibung der Option, der Länge der Daten und den eigentlichen Daten.
+
+Ein Beispiel für einen LCP Frame wäre ein Frame mit der Option Authentication. Die enthaltenen Daten sind in dem Fall das gewählte  Authen\-ti\-ca\-tion-Protocol.
 
 \section{Vergleich der Protokolle}
 \subsection{Frames}
@@ -470,16 +474,16 @@ LAPD nutzt vier verschiedene Frameformate.
 
 PPP nutzt das selbe Rahmenformat wie HDLC, wobei standardmäßig 7-9 Byte für den eigentlichen Rahmen und 1500 Byte für Nutzdaten genutzt werden.
 \subsection{Adressierung}
-Die Adressierungsverfahren der 3 Protokolle unterscheiden sich grundsätzlich. 
+Die Adressierungsverfahren der 3 Protokolle unterscheiden sich grund\-sätz\-lich. 
 
-Ethernet sendet die Adresse von Sender ind Empfänger mit. Diese Adressen sind im Normalfall fest vergeben und werden in die Hardware eingebrannt.
+Ethernet sendet die Adresse von Sender und Empfänger mit. Diese Adressen sind im Normalfall fest vergeben und werden in die Hardware eingebrannt.
 
 LAPD nutzt variable Adressen und sendet nur die Adresse des Teilnehmers mit.
 
 PPP nutzt zwar Adressen, diese sind aber nicht relevant.
 
 \subsection{Sendequittierung}
-Beim Ethernet werden gesendete Frames nicht quittiert. 
+Bei Ethernet werden gesendete Frames nicht quittiert. 
 
 Beim LDAP müssen die empfangen Frames quittiert werden. Wird ein Frame nicht quittiert, kann das nächste nicht verschickt werden. Wie viele Frames vor dem Quittieren gesendet werden können, regelt die Fenstergröße.
 
@@ -491,13 +495,13 @@ Alle 3 verglichenen Protokolle arbeiten mit dem CRC Algorithmus. Bei Ethernet un
 \subsection{Sendemodus}
 Die Übertragung des Ethernet ist sowohl im Halb- als auch im Vollduplex-Modus möglich. 
 
-LAPD überträgt, bedingt durch den $S_0$ Bus im Vollduplex-Modus.
+LAPD überträgt, bedingt durch den $S_0$ Bus, im Vollduplex-Modus.
 
 PPP setzt eine Vollduplex Leitung voraus.
 
 \subsection{Exklusivität auf dem Medium}
 Sowohl Ethernet als auch LAPD nutzen ihr Medium als Shared Medium.
-Da PPP Vollduplex voraussetzt hat dies keine Bedeutung.
+Für PPP ist eine exklusive Leitung als Vorraussetzung gegeben.
 
 \subsection{Zusammenfassung}
 
@@ -509,9 +513,9 @@ Da PPP Vollduplex voraussetzt hat dies keine Bedeutung.
 
 \textbf{Data Größe} & 46-1500 Byte & Variabel & Variabel \\ \hline
 
-\textbf{Preambel} & ja & ja & ja\\ \hline
+\textbf{Präambel} & ja & ja & ja\\ \hline
 
-\textbf{Präambel Größe} & 8 Byte  & 1 Byte & 1 Byte\\ \hline
+\textbf{Präambel Größe} & 8 Byte (bzw. s. \ref{ethernet_praeambel})  & 1 Byte & 1 Byte\\ \hline
 
 \textbf{Präambel Wert} & 0101...011  & 01111110 & 01111110\\ \hline
 
