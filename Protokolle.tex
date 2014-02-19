@@ -14,7 +14,7 @@
 \usepackage[utf8]{inputenc}
 
 %Schriftart Helvetica 
-\usepackage[scaled]{helvet}
+%\usepackage[scaled]{helvet}
 
 %Seitenränder
 \usepackage{geometry}
@@ -322,7 +322,7 @@ Siehe ~\ref{blockbegrenzung}.
 
 Das Point-to-Point-Protokoll ist ein typisches OSI Layer 2 Protokoll und hat die Aufgabe, Daten der höheren Schichten über eine Punkt-zu-Punkt-Verbindung zu übertragen. Beispiele für Punkt-zu-Punkt-Verbindungen sind ATM-Verbindungen, leitungsvermittelnde Netze, wie Wählverbindungen über das analoge Telefonnetz (über ein Analog-Modem), oder GSM.
 
-Die Aufgaben von PPP sind diese Verbindungen zu initialisieren, aufrecht zu erhalten und wieder zu beenden.
+Die Aufgaben von PPP sind, neben den klassischen Layer 2 Aufgaben, diese Verbindungen zu initialisieren, aufrecht zu erhalten und wieder zu beenden.
 
 Zur Initialisierung gehört die Authentisierung, das Bestimmen der Paketgröße, die Vergabe von IP Adressen und das Verschlüsseln von Daten.  
 Das Initialisieren dieser Optionen nennt man auch Aushandeln. Zum Aushandeln existiert ein eigenes Protokoll, das sogenannte Link Control Protocol, im Folgenden als LCP bezeichnet. LCP wird innerhalb des PPP Frames als Nutzdaten übertragen.
@@ -338,12 +338,11 @@ LCP wird ausserdem auch dafür benutzt um die Verbindung aufzubauen, zu konfigur
 PPP ist in RFC 1661 definiert und wurde in mehreren anderen RFC, wie in RFC 1662 und 1663, weiter ausgearbeitet.
 
 %Ausserdem ermöglicht PPP es der Vermittlungsschicht (Networklayer), das für auf dieser Schicht laufende Protokoll, von diesem Protokoll unabhängige Optionen auszuhandeln, diese Protokolle nennt man Network Control Protocol (NCP).
-PPP erlaubt es, dem aufsitzenden Protokoll, einem Protokoll des Layer 3, eigene Optionen auszuhandeln. Diese Optionen haben keine Auswirkungen auf den Layer 2, 
+PPP erlaubt es dem aufsitzenden Protokoll, einem Protokoll des Layer 3, eigene Optionen auszuhandeln. Diese Optionen betreffen lediglich das Protokoll des höheren Layer. Die Funktionalität dieser Aushandlungen ist in den Network Control Protocol, NPC, implementiert.
 
 Beispiele für NCP sind IPCP für IP, AppleTalk Control Protokoll für Appletalk oder IPXCP für IPX. Das IPCP steht für IP Control Protocol.
 
-Wenn Beispielsweise IP über PPP übertragen wird dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Clienten eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
-\large{{\textcolor{red}{Da noch mal genauer nachlesen!!!}}}
+Wenn Beispielsweise IP über PPP übertragen wird, dient IPCP(Internet Protocol Control Protocol) als NCP. Über dieses Protokoll wird nach dem Verbindungsaufbau dem einwählenden Client eine IP-Adresse, Subnetzmaske und Standartgateway über IPCP-Packete zu gesendet. 
 
 \subsubsection{LCP \label{lcp_operationen}}
 
@@ -361,8 +360,6 @@ LCP selbst durchläuft vier einzelne Phasen:
 %Dies kann jederzeit durch den Benutzer aber auch durch Physische Ereignisse passieren.
 
 LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
-
-\large{\textcolor{red}{LCP Frames suchen}}
 
 %Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese Verhalten festhalten. 
 LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. \textcolor{red}{Was für Prozesse?}
@@ -504,7 +501,7 @@ PPP setzt eine Vollduplex Leitung voraus.
 
 \subsection{Exklusivität auf dem Medium}
 Sowohl Ethernet als auch LAPD nutzen ihr Medium als Shared Medium.
-Da PPP Vollduplex voraussetzt hat dies keine Bedeutung.
+Für PPP ist eine exklusive Leitung als Vorraussetzung gegeben.
 
 \subsection{Zusammenfassung}
 
