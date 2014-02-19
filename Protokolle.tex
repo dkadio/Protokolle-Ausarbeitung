@@ -14,7 +14,7 @@
 \usepackage[utf8]{inputenc}
 
 %Schriftart Helvetica 
-%\usepackage[scaled]{helvet}
+\usepackage[scaled]{helvet}
 
 %Seitenränder
 \usepackage{geometry}
@@ -362,7 +362,7 @@ LCP selbst durchläuft vier einzelne Phasen:
 LCP unterscheidet zwischen drei Frames. Einen um Verbindungen aufzubauen und zu konfigurieren, einen zum Beenden der Verbindung und einen zum Verwalten der Verbindung.
 
 %Das LCP befasst sich nicht mit den Optionen selbst die für Schicht-2 ausgehandelt werden sondern nur wie sie ausgehandelt werden. Ein Prozess kann seine Optionen einem anderen vorschlagen und dieser kann dann entscheiden ob er alle annimmt oder nur einige annimmt oder sie ganz abschlägt. Es gibt in RFC 1661 elf verschiedene Typen von LCP-Rahmen die diese Verhalten festhalten. 
-LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. \textcolor{red}{Was für Prozesse?}
+LCP regelt nicht die eigentlichen Layer 2 Optionen, sondern beschreibt, wie diese ausgehandelt werden. 
 
 Im Folgenden die einzelnen Typen und ihre Bedeutung:
 
@@ -384,16 +384,36 @@ Im Folgenden die einzelnen Typen und ihre Bedeutung:
 
 \subsubsection{Verbindungsablauf des PPP}
 
-Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Zeichnung.
-Als ersten ist die Leitung tot. Das bedeutet es existiert kein Träger auf der physikalischen Ebene und auch keine Verbindung auf der Bitübertragungsschicht.
-Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand zu Aufbauen. Genau in diesem Augenblick beginnt dann die Verhandlung der LCP Optionen. Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. Nach dem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand nach Öffnen in der die eigentliche Datenübertragung stattfindet. Wenn diese Beendet ist und alle Daten erfolgreich übertragen worden sind kann die Verbindung wie bereits oben geschrieben Beendet werden.
+Im folgenden durchlaufen wir die verschiedenen Zustände des Verbindungsaufbaus bis hin zum Abbau der Verbindung anhand der unten gezeigten Abbildung (Abbildung~\ref{aufbau_ppp-verbindung}).
 
-\large{\textcolor{red}{Noch mal nachlesen}}
+%Wenn diese erfolgreich sein sollten können nun die beiden Parteien die mit einander kommunizieren möchten ihre Identität prüfen. 
+%Das heisst der Zustand wechselt auf Authentifizieren. Falls dieser Fall nun fehlschlägt wird die Verbindung Beendet, dh. auch der Zustand ändert sich und der Träger wird wieder freigegeben. Somit wären wir wieder im Ausgangszustand. Im Gegengesetzten Fall würde der nächste Zustand Netz heissen und das entsprechende NCP-Protokolle aufgerufen werden um die Vermittlungsschicht zu konfigurieren. 
+ 
+\begin{itemize}
+\item{\textbf{Tot:}}
+Der Zustand \glqq Tot\grqq ~beschreibt den Ausgangszustand der Leitung. Das bedeutet, dass kein Träger auf der physikalischen Ebene existiert und dass auch keine Verbindung auf der Bit\-über\-trag\-ungs\-schicht besteht. 
+
+\item{\textbf{Aufbauen:}}
+Im Zustand \glqq Aufbauen\grqq wird eine Verbindung aufgebaut. Weiterhin beginnen in diesem Zustand die Verhandlung der LCP Optionen. Wurden die Verhandlungen erfolgreich abgeschlossen, können beide Parteien miteinander kommunizieren. Vor dem Beginn der eigentlichen Kommunikation müssen erst die Identitäten der Parteien geprüft werden.
+
+\item{\textbf{Authentifizieren:}}
+Diese Identitätsprüfung stellt einen eigenen Zustand dar, dieser nennt sich \glqq Authentifizieren\grqq . Tritt in diesem Zustand ein Fehler auf, wird die Verbindung beendet und der Verbindungsaufbau wechselt  in den Ausgangszustand \glqq{Beenden}\grqq , der Träger wird wieder freigegeben.
+
+\item{\textbf{Netz:}}
+Wenn die Authentifizierung erfolgreich war wechselt der Verbindungsaufbau in den Zustand \glqq Netz\grqq . In diesem Zustand werden die entsprechenden NCP Protokolle aufgerufen um die Vermittlungsschicht zu konfigurieren.
+
+\item{\textbf{Offen:}}
+Nachdem die Konfiguration erfolgreich abgeschlossen ist wechselt der Zustand in den Zustand \glqq  Offen\grqq . In diesem Zustand findet die eigentliche Datenübertragung statt. 
+
+\item{\textbf{Beenden:}}
+Der Zustand \glqq Beenden\grqq wird genutzt um die Verbindung wieder abzubauen. Er überführt die Verbindung in den Zustand \glqq Tot\grqq .
+\end{itemize}
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Grafiken/ppp.jpg}	
-	\caption{Übersicht PPP Verbindungsaufbau \cite{*}}
+	\caption{Übersicht PPP Verbindungsaufbau \cite{SWB-307875709}}
 	\label{aufbau_ppp-verbindung}
 \end{figure}
 
@@ -401,7 +421,7 @@ Nachdem eine physikalische Verbindung aufgebaut worden ist wechselt der Zustand 
 
 \subsubsection{PPP Frame}
 
-PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung. \textcolor{red}{Ist das so? Warum dann am Ende FCS?}
+PPP besitzt eine Rahmenbildungsmethode die Anfang und Ende eines jeden Rahmens kennzeichnet. Diese übernimmt ebenfalls die Aufgabe der Fehlererkennung.
 
 Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Steuerung,  Protokoll, Nutzdaten, Prüfsumme und wieder Flag.
 
@@ -414,7 +434,7 @@ Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Ste
 
 \paragraph{Flag}
 
-Das Flag besteht am Anfang, sowie am Ende  aus einem Byte (011111110). 
+Das Flag steht am Anfang, sowie am Ende des Rahmens und besteht aus einem Byte (011111110). Am Anfang des Rahmens signalisiert es den Beginn des Rahmens und am Ende signalisiert es das Ende.
 % dieses wird mit der Byte-Stuffing-Methode aufgefüllt, um zu verhindern das im Datenfeld eines Frames eine Bitfolge als Sternzeichen interpretiert werden. Das erste Byte ist somit das Startbyte für einen Rahmen. Am Ende eines Rahmens wird die selbe Bitfolge gesendet und zu kennzeichnen, das der Frame zu Ende ist.
 
 
