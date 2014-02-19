@@ -407,7 +407,7 @@ Der Rahmen besteht aus insgesamt sieben Feldern. Dazu gehören Flag, Adress, Ste
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{Grafiken/ppp-frame.jpg}	
+	\includegraphics[width=1\textwidth]{Grafiken/lcp-header-alone.jpg}	
 	\caption{Darstellung eines PPP Frames \cite{ppp-lcp-info.header}}
 	\label{ppp_frame}
 \end{figure}
@@ -451,7 +451,7 @@ Die Prüfsumme kann auf bis zu 4 Byte ausgehandelt werden, im Normalfall reichen
 \end{figure}
 Die Grafik zeigt noch einmal den PPP Frame. In diesem Abschnitt möchten wir aber das Information Feld genauer betrachten.
 
-Das Information Feld ist wieder ein eigener Rahmen, der LCP Frame. 
+In dem Information Feld wird, zur Verhandlung, wieder ein eigener Rahmen übertragen, der LCP Frame. 
 \paragraph{Code}
 Der Code besteht aus 8 Bits und gibt an welche Aktion ausgeführt werden soll. Die einzelnen Befehle, bzw. Operationen wurden bereits in  \ref{lcp_operationen} näher beschrieben.
 
@@ -463,6 +463,25 @@ Der Indentifier ermöglicht die Unterscheidung, ob ein Rahmen eine Anfrage oder 
 Das Lenght Feld beschreibt die Größe des gesamten Frames. Die gesamte Größe ist die Größe inklusive des Headers. Hier erfährt der Empfänger auch wie viele Daten übertragen wurden.
 \paragraph{Data/Options}
 Im Data/Options Feld ist der eigentliche Payload enthalten. Die Größe des Feldes ist variabel. Die Daten werden in Form von Optionen gesendet die ebenfalls wieder eine Art Header haben. Der Header besteht aus der Beschreibung der Option, der Länge der Daten und den eigentlichen Daten.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Grafiken/lcp-option-header.jpg}	
+	\caption{Darstellung eines Options Frames innerhalb eines LCP Frames\cite{ppp-lcp-option-info2.header}}
+\end{figure}
+
+Für das Type-Feld sind folgende Werte zulässig:
+
+\begin{itemize}
+	\item 1 Maximum-Receive-Unit
+	\item 2 Async-Control-Character-Map
+	\item 3 Authentication-Protocol
+	\item 4 Quality-Protocol
+	\item 5 Magic-Number
+	\item 6 RESERVED
+	\item 7 Protocol-Field-Compression
+	\item 8 Address-and-Control-Field- Compression1
+\end{itemize} 
 
 Ein Beispiel für einen LCP Frame wäre ein Frame mit der Option Authentication. Die enthaltenen Daten sind in dem Fall das gewählte  Authen\-ti\-ca\-tion-Protocol.
 
@@ -522,11 +541,16 @@ Für PPP ist eine exklusive Leitung als Vorraussetzung gegeben.
 \textbf{Präambel Abschluss} & Nein & Ja & Ja\\ \hline
 
 \textbf{Sende-quittierung} & nein & ja & nein\\ \hline
+
 \textbf{Prüfsumme} & ja & ja & ja\\ \hline
 
 \textbf{Prüfsumme Größe} & 4 Byte fest & 2 Byte fest & max. 4 Byte variabel \\ \hline
 
 \textbf{Frametypen} & 1 & 4 &  1\\ \hline
+
+\textbf{Kollisions-kontrolle} & ja & ja & Nein\\ \hline
+
+\textbf{Kollisions-kontrolle-Art} & CSMA/CD & CSMA/CA & Nein\\ \hline
 
 \textbf{Exklusivität} & Shared & Shared & not Shared\\ \hline
 
